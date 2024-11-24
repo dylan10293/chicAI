@@ -56,6 +56,7 @@ const OutfitManagement = ({ suggestedOutfits = [] }) => {
           {savedOutfits.length > 0 ? (
             savedOutfits.map((outfit, index) => (
               <OutfitCard key={index} outfit={outfit} />
+              //card created here
             ))
           ) : (
             <p>No outfits saved yet</p>
