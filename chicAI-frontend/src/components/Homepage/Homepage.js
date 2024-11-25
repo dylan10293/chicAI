@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Container, Row, Col } from "react-bootstrap";
 import LoginForm from '../Login/LoginForm';
+import RegisterForm from '../Register/RegisterForm';
 
 const Homepage = () => {
 	const [isLogin, setIsLogin] = useState(true);
@@ -22,7 +23,7 @@ const Homepage = () => {
 					</p>
 				</Col>
 				<Col md={4} className="d-flex flex-column justify-content-center align-items-center p-5 bg-light">
-					{isLogin ? <LoginForm /> : <div>Register</div>}
+					{isLogin ? <LoginForm toggleForm={toggleForm} /> : <RegisterForm toggleForm={toggleForm} />}
 				</Col>
 			</Row>
 		</Container>
