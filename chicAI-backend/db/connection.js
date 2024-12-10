@@ -1,15 +1,22 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
-import { } from "dotenv/config";
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
-try {
-	await client.connect();
-	await client.db("sample_restaurants").command({ ping: 1 });
-	console.log(
-		"Pinged your deployment. You successfully connected to MongoDB!"
-	);
-} catch (err) {
-	console.error(err);
-}
-let db = client.db("sample_restaurants");
-export default db;
+
+let db;
+
+(async () => {
+  try {
+    await client.connect();
+    console.log("Successfully connected to MongoDB!");
+    db = client.db("chicAI");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1); // Exit process with failure
+  }
+})();
+
+export const getDb = () => db;

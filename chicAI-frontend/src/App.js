@@ -10,7 +10,9 @@ function App() {
   return (
     <div className="App">
       {/* Pass suggested outfits to OutfitManagement */}
-      <OutfitManagement suggestedOutfits={suggestedOutfits} />
+      {/* <OutfitManagement suggestedOutfits={suggestedOutfits} /> */}
+      <OutfitManagement userId="user_2q0JuFr5SPDCEVSG3jdjarMRAFh" />
+
     </div>
   );
 }

@@ -1,14 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import axios from "axios";
 import OutfitCard from "./OutfitCard";
 
-const OutfitManagement = ({ suggestedOutfits = [] }) => {
+const OutfitManagement = ({ userId }) => {
+  const [suggestedOutfits, setSuggestedOutfits] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [savedOutfits, setSavedOutfits] = useState([]);
 
-  const saveOutfit = () => {
-    const outfitToSave = suggestedOutfits[currentIndex];
-    setSavedOutfits([...savedOutfits, outfitToSave]);
+  // Fetch suggestions for the user
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/suggestions/${userId}`);
+        setSuggestedOutfits(response.data);
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
+      }
+    };
+
+    fetchSuggestions();
+  }, [userId]);
+
+  // Fetch saved outfits for the user
+  useEffect(() => {
+    const fetchSavedOutfits = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/suggestions/saved");
+        setSavedOutfits(response.data);
+      } catch (error) {
+        console.error("Error fetching saved outfits:", error);
+      }
+    };
+
+    fetchSavedOutfits();
+  }, []);
+
+  // Generate suggestions for the user
+  const generateSuggestions = async () => {
+    try {
+      await axios.post("http://localhost:8000/api/suggestions/generate", {
+        userId,
+        weather: "sunny",
+        calendarEvent: "office meeting",
+        laundryStatus: [], // Example: Pass wardrobe item IDs in laundry
+      });
+      alert("Suggestions generated successfully!");
+  
+      // Re-fetch suggestions after generation
+      const response = await axios.get(`http://localhost:8000/api/suggestions/${userId}`);
+      setSuggestedOutfits(response.data);
+    } catch (error) {
+      console.error("Error generating suggestions:", error);
+    }
+  };
+  
+
+  const saveOutfit = async () => {
+    try {
+      const outfitToSave = suggestedOutfits[currentIndex];
+      if (!savedOutfits.some((outfit) => outfit._id === outfitToSave._id)) {
+        const response = await axios.post("http://localhost:8000/api/suggestions/save", outfitToSave);
+        setSavedOutfits([...savedOutfits, { ...outfitToSave, _id: response.data.id }]);
+      } else {
+        alert("This outfit is already saved!");
+      }
+    } catch (error) {
+      console.error("Error saving outfit:", error);
+    }
   };
 
   const nextOutfit = () => {
@@ -29,6 +88,9 @@ const OutfitManagement = ({ suggestedOutfits = [] }) => {
         {/* Swipe Section */}
         <Col md={4}>
           <h2>Swipe Section</h2>
+          <Button onClick={generateSuggestions} className="mb-3">
+            Generate Suggestions
+          </Button>
           {suggestedOutfits.length > 0 ? (
             <>
               <OutfitCard outfit={suggestedOutfits[currentIndex]} />
@@ -56,7 +118,6 @@ const OutfitManagement = ({ suggestedOutfits = [] }) => {
           {savedOutfits.length > 0 ? (
             savedOutfits.map((outfit, index) => (
               <OutfitCard key={index} outfit={outfit} />
-              //card created here
             ))
           ) : (
             <p>No outfits saved yet</p>
