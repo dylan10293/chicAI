@@ -14,7 +14,7 @@ const Homepage = () => {
 	return (
 		// <Container fluid className="vh-100 d-flex">
 		<Row className="vh-100 w-100">
-			<Col md={8} className="d-flex flex-column justify-content-center p-5">
+			<Col md={8} className="landing-message d-flex flex-column justify-content-center p-5">
 				<h1 className="mb-4" style={{ fontWeight: "bold" }}>
 					Chic AI
 				</h1>
