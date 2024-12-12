@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
@@ -19,6 +19,7 @@ const SuggestionGenerator = () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/suggestions/latest/${userId}`);
       setSuggestions(response.data.suggestion.suggestions);
+      setSuccess("Loaded previous suggestion as a new suggestion can only be generated once per 24 hours");
       return true;
     } catch (err) {
       if (err.response?.status === 404) {
@@ -74,17 +75,13 @@ const SuggestionGenerator = () => {
     }
   };
 
+  useEffect(() => {
+    handleGenerate();
+  }, []);
+
+
   return (
     <div>
-      <Form>
-        <Button
-          variant="primary"
-          disabled={loading}
-          onClick={handleGenerate}
-        >
-          {loading ? "Loading..." : "Generate or Fetch Suggestion"}
-        </Button>
-      </Form>
       <div className="mt-4">
         {error && <Alert variant="danger">{error}</Alert>}
         {success && <Alert variant="success">{success}</Alert>}
@@ -95,7 +92,7 @@ const SuggestionGenerator = () => {
               {suggestions.map((suggestion, index) => (
                 <Col xs={12} sm={6} md={4} className="d-flex" key={index}>
                   <Card className="flex-fill">
-                    <Card.Body>
+                    <Card.Body className="d-flex flex-column justify-content-between">
                       <Card.Title>{suggestion.name}</Card.Title>
                       <Card.Text>
                         <strong>Items:</strong>
