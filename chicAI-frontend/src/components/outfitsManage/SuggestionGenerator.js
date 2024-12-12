@@ -12,6 +12,7 @@ const SuggestionGenerator = () => {
   const [userId, setUserId] = useState("user_2q0a6hxnhL1ou9w5PlVpD1P8wXh"); //TODO: fetch this userId to remove hardcoded data
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   const fetchLatestSuggestion = async () => {
@@ -31,14 +32,17 @@ const SuggestionGenerator = () => {
   const handleGenerate = async () => {
     setLoading(true);
     setError("");
+    setSuccess("");
     setSuggestions([]);
 
+    // Check for existing suggestion
     const hasRecentSuggestion = await fetchLatestSuggestion();
     if (hasRecentSuggestion) {
       setLoading(false);
       return;
     }
 
+    // Generate a new suggestion if none exists
     try {
       const response = await axios.post("http://localhost:8000/api/suggestions/generate", {
         userId,
@@ -46,6 +50,25 @@ const SuggestionGenerator = () => {
       setSuggestions(response.data.suggestions);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to generate suggestions.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async (outfit) => {
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      await axios.post("http://localhost:8000/api/outfits/create", {
+        name: outfit.name,
+        items: outfit.items.map((item) => item.wardrobeItemId), // Send wardrobeItemIds only
+        userId,
+      });
+      setSuccess(`Outfit "${outfit.name}" saved successfully!`);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to save outfit.");
     } finally {
       setLoading(false);
     }
@@ -64,6 +87,7 @@ const SuggestionGenerator = () => {
       </Form>
       <div className="mt-4">
         {error && <Alert variant="danger">{error}</Alert>}
+        {success && <Alert variant="success">{success}</Alert>}
         {suggestions.length > 0 && (
           <div>
             <h3>Suggestions</h3>
@@ -83,6 +107,13 @@ const SuggestionGenerator = () => {
                           ))}
                         </ul>
                       </Card.Text>
+                      <Button
+                        variant="success"
+                        disabled={loading}
+                        onClick={() => handleSave(suggestion)}
+                      >
+                        Save to Outfits
+                      </Button>
                     </Card.Body>
                   </Card>
                 </Col>
