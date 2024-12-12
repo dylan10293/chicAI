@@ -53,64 +53,54 @@ router.get("/events/:userId", async (req, res) => {
 
 // Generate suggestions for a user
 router.post("/generate", async (req, res) => {
-  const { userId, weather, laundryStatus } = req.body;
+  const { userId } = req.body;
+
+  const weather = "sunny"; // Hardcoded variable for weather
 
   try {
     const db = getDb();
 
-    // Fetch the next upcoming event for the user
-    const events = await db
-      .collection("events")
-      .find({ userId, eventDate: { $gte: new Date() } })
-      .sort({ eventDate: 1 })
-      .limit(1)
-      .toArray();
-
-    const event = events[0];
-    const calendarEvent = event ? event.eventName : "casual outing";
-    const eventTags = event ? event.tags : [];
-
-    // Exclude items in laundry
-    // TODO: filter by inLaundry
-    // const laundyItems = await db.collection("laundry");
-
-    // Fetch wardrobe items which are not in laundry
+    // Fetch wardrobe items with laundryStatus: false and tag: 'sunny'
     const wardrobeItems = await db.collection("wardrobe")
       .find({
-        tags: { $in: [...eventTags, weather.toLowerCase()] },
-        laundryStatus: false
+        laundryStatus: false,
+        tags: "sunny", // Check for tag 'sunny' in wardrobe items
       })
       .toArray();
 
-    console.log("Wardrobe Query Result:", wardrobeItems);
-    console.log("Query Tags:", [...eventTags, weather.toLowerCase()]);
-    console.log("Wardrobe Query Result:", wardrobeItems);
+    // Separate wardrobe items by type
+    const tops = wardrobeItems.filter((item) => item.type === "top");
+    const bottoms = wardrobeItems.filter((item) => item.type === "bottom");
 
-    if (!wardrobeItems.length) {
-      console.error("No suitable wardrobe items found");
-      return res.status(400).json({
-        message: "No suitable wardrobe items found.",
-        debug: {
-          excludedItems: laundryStatus,
-          queryTags: [...eventTags, weather.toLowerCase()],
-        },
-      });
+    // Ensure we have at least one top and one bottom
+    if (tops.length === 0 || bottoms.length === 0) {
+      return res.status(400).json({ message: "Not enough wardrobe items to create an outfit." });
     }
 
-    // Generate up to 3 outfit suggestions
-    const suggestions = formulateSuggestions(wardrobeItems, weather, calendarEvent);
-    console.log('suggestions: ', JSON.stringify(suggestions, null, 2));
+    // Pick one top and one bottom to create an outfit
+    const top = tops[0];
+    const bottom = bottoms[0];
 
-    const suggestionsWithUserId = suggestions.map((s) => ({ ...s, userId }));
-    console.log("suggestionsWithUserId: ", suggestionsWithUserId)
-    await db.collection("suggestions").insertMany(suggestionsWithUserId);
+    const suggestion = {
+      description: `Outfit for casual outing (${weather})`,
+      items: [
+        { wardrobeItemId: top._id },
+        { wardrobeItemId: bottom._id },
+      ],
+      tags: [...top.tags, ...bottom.tags],
+      userId,
+    };
 
-    res.status(201).json({ message: "Suggestions generated successfully!" });
+    // Store the suggestion in the database
+    await db.collection("suggestions").insertOne(suggestion);
+
+    res.status(201).json({ message: "Suggestion generated successfully!" });
   } catch (error) {
-    console.error("Error generating suggestions:", error);
-    res.status(500).json({ message: "Failed to generate suggestions.", error: error.message });
+    console.error("Error generating suggestion:", error);
+    res.status(500).json({ message: "Failed to generate suggestion." });
   }
 });
+
 
 
 

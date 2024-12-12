@@ -40,10 +40,11 @@ const OutfitManagement = ({ userId }) => {
     try {
       const response = await axios.post("http://localhost:8000/api/suggestions/generate", {
         userId,
-        weather: "blue",
-        laundryStatus: [], // Pass actual IDs of items in laundry
       });
-      alert("Suggestions generated successfully!");
+  
+      alert(response.data.message); // Display success message
+  
+      // Refresh the suggestions after generation
       const updatedSuggestions = await axios.get(`http://localhost:8000/api/suggestions/${userId}`);
       setSuggestedOutfits(updatedSuggestions.data);
     } catch (error) {
@@ -51,6 +52,7 @@ const OutfitManagement = ({ userId }) => {
       alert(`Failed to generate suggestions: ${error.response?.data?.message || "Unknown error"}`);
     }
   };
+  
   
   
   
