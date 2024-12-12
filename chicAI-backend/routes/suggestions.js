@@ -56,7 +56,7 @@ router.post("/generate", async (req, res) => {
   const { userId } = req.body;
 
   const weather = "sunny"; // Hardcoded variable for weather
-
+  
   try {
     const db = getDb();
 
