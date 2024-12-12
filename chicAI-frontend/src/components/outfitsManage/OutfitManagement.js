@@ -36,24 +36,24 @@ const OutfitManagement = ({ userId }) => {
     fetchSavedOutfits();
   }, []);
 
-  // Generate suggestions for the user
   const generateSuggestions = async () => {
     try {
-      await axios.post("http://localhost:8000/api/suggestions/generate", {
+      const response = await axios.post("http://localhost:8000/api/suggestions/generate", {
         userId,
-        weather: "sunny",
-        calendarEvent: "office meeting",
-        laundryStatus: [], // Example: Pass wardrobe item IDs in laundry
+        weather: "blue",
+        laundryStatus: [], // Pass actual IDs of items in laundry
       });
       alert("Suggestions generated successfully!");
-  
-      // Re-fetch suggestions after generation
-      const response = await axios.get(`http://localhost:8000/api/suggestions/${userId}`);
-      setSuggestedOutfits(response.data);
+      const updatedSuggestions = await axios.get(`http://localhost:8000/api/suggestions/${userId}`);
+      setSuggestedOutfits(updatedSuggestions.data);
     } catch (error) {
-      console.error("Error generating suggestions:", error);
+      console.error("Error generating suggestions:", error.response?.data || error.message);
+      alert(`Failed to generate suggestions: ${error.response?.data?.message || "Unknown error"}`);
     }
   };
+  
+  
+  
   
 
   const saveOutfit = async () => {
@@ -82,12 +82,31 @@ const OutfitManagement = ({ userId }) => {
     }
   };
 
+  const deleteSuggestions = async () => {
+    try {
+      const response = await axios.delete(`http://localhost:8000/api/suggestions/${userId}`);
+      alert(`${response.data.deletedCount} suggestions deleted successfully!`);
+      setSuggestedOutfits([]); // Clear suggestions from the UI
+    } catch (error) {
+      console.error("Error deleting suggestions:", error);
+      alert("Failed to delete suggestions.");
+    }
+  };
+
+  
+  
+
   return (
     <Container fluid>
       <Row>
         {/* Swipe Section */}
         <Col md={4}>
           <h2>Swipe Section</h2>
+
+
+            <Button onClick={deleteSuggestions} className="mb-3" variant="danger">
+              Delete All Suggestions
+            </Button>
           <Button onClick={generateSuggestions} className="mb-3">
             Generate Suggestions
           </Button>

@@ -7,10 +7,13 @@ const OutfitCard = ({ outfit }) => {
       <Card.Body>
         <Card.Title>{outfit.description}</Card.Title>
         <Card.Text>
+          <pre>
+            {JSON.stringify(outfit, null, 2)}
+          </pre>
           <strong>Items:</strong>{" "}
           {outfit.items.map((item, index) => (
             <span key={index}>
-              {item.name} ({item.type})
+              {item.name} ({item.type}) ({item.wardrobeItemId})
               {index < outfit.items.length - 1 ? ", " : ""}
             </span>
           ))}
