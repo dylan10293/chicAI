@@ -3,6 +3,7 @@ import cors from "cors";
 import { getDb } from "./db/connection.js";
 import dotenv from "dotenv";
 import suggestionsRouter from "./routes/suggestions.js";
+import outfitsRouter from "./routes/outfits.js"; 
 
 dotenv.config();
 
@@ -14,6 +15,10 @@ app.use(express.json());
 
 // Routes
 app.use("/api/suggestions", suggestionsRouter);
+
+// Use the new outfits router
+app.use("/api/outfits", outfitsRouter); // Updated route
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
