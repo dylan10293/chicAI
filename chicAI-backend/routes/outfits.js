@@ -66,4 +66,44 @@ router.post("/create", async (req, res) => {
   }
 });
 
+// Route to fetch all outfits
+router.get("/", async (req, res) => {
+  try {
+    const db = getDb();f
+
+    // Fetch all outfits from the outfits collection
+    const outfits = await db.collection("outfits").find().toArray();
+
+    // Respond with the fetched outfits
+    res.status(200).json(outfits);
+  } catch (error) {
+    console.error("Error fetching outfits:", error);
+    res.status(500).json({ message: "Failed to fetch outfits." });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ message: "Outfit ID is required." });
+  }
+
+  try {
+    const db = getDb();
+
+    // Delete the outfit with the given ID
+    const result = await db.collection("outfits").deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Outfit not found." });
+    }
+
+    res.status(200).json({ message: "Outfit deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting outfit:", error);
+    res.status(500).json({ message: "Failed to delete outfit." });
+  }
+});
+
 export default router;

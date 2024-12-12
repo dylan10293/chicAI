@@ -10,6 +10,7 @@ const OutfitCreator = ({ userId }) => {
   const [wardrobeItems, setWardrobeItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [outfitName, setOutfitName] = useState("");
+  const [outfits, setOutfits] = useState([]);
 
   // Fetch wardrobe items
   useEffect(() => {
@@ -24,6 +25,22 @@ const OutfitCreator = ({ userId }) => {
 
     fetchWardrobeItems();
   }, []);
+
+
+  const fetchOutfits = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/outfits");
+      setOutfits(response.data);
+    } catch (error) {
+      console.error("Error fetching outfits:", error);
+    }
+  };
+
+  // Fetch outfits on load
+  useEffect(() => {
+    fetchOutfits();
+  }, []);
+
 
   const toggleItemSelection = (itemId) => {
     setSelectedItems((prevSelected) =>
@@ -49,6 +66,7 @@ const OutfitCreator = ({ userId }) => {
       alert("Outfit created successfully!");
       setOutfitName("");
       setSelectedItems([]);
+      fetchOutfits();
     } catch (error) {
       console.error("Error creating outfit:", error);
       alert("Failed to create outfit.");
@@ -56,43 +74,77 @@ const OutfitCreator = ({ userId }) => {
   };
 
   return (
-    <Container>
-      <h2>Create an Outfit</h2>
-      <Form>
-        <Form.Group>
-          <Form.Label>Outfit Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter outfit name"
-            value={outfitName}
-            onChange={(e) => setOutfitName(e.target.value)}
-          />
-        </Form.Group>
-      </Form>
+    <Container fluid>
       <Row>
-        {wardrobeItems.map((item) => (
-          <Col key={item._id} md={4}>
-            <Card
-              style={{
-                margin: "10px",
-                border: selectedItems.includes(item._id) ? "2px solid blue" : "1px solid gray",
-              }}
-              onClick={() => toggleItemSelection(item._id)}
-            >
-              <Card.Body>
-                <Card.Title>{item.name}</Card.Title>
-                <Card.Text>Type: {item.type}</Card.Text>
-                <Card.Text>Tags: {item.tags.join(", ")}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
+        {/* Wardrobe Items Section */}
+        <Col md={6}>
+          <h2>Wardrobe Items</h2>
+          <Form>
+            <Form.Group>
+              <Form.Label>Outfit Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter outfit name"
+                value={outfitName}
+                onChange={(e) => setOutfitName(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+          <Row>
+            {wardrobeItems.map((item) => (
+              <Col key={item._id} md={6}>
+                <Card
+                  style={{
+                    margin: "10px",
+                    border: selectedItems.includes(item._id) ? "2px solid blue" : "1px solid gray",
+                  }}
+                  onClick={() => toggleItemSelection(item._id)}
+                >
+                  <Card.Body>
+                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Text>Type: {item.type}</Card.Text>
+                    <Card.Text>Tags: {item.tags.join(", ")}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+          <Button className="mt-3" onClick={createOutfit}>
+            Create Outfit
+          </Button>
+        </Col>
+
+        {/* Outfits Section */}
+        <Col md={6}>
+          <h2>Saved Outfits</h2>
+          <Row>
+            {outfits.map((outfit) => (
+              <Col key={outfit._id} md={6}>
+                <Card style={{ margin: "10px" }}>
+                  <Card.Body>
+                    <Card.Title>{outfit.name}</Card.Title>
+                    <Card.Text>
+                      <strong>Items:</strong>{" "}
+                      {outfit.items.map((item, index) => (
+                        <span key={index}>
+                          {item.name} ({item.type})
+                          {index < outfit.items.length - 1 ? ", " : ""}
+                        </span>
+                      ))}
+                    </Card.Text>
+                    <Card.Text>
+                      <strong>Tags:</strong> {outfit.items.flatMap((item) => item.tags).join(", ")}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Col>
       </Row>
-      <Button className="mt-3" onClick={createOutfit}>
-        Create Outfit
-      </Button>
     </Container>
   );
 };
+
 
 export default OutfitCreator;

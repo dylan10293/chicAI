@@ -19,6 +19,7 @@ app.use("/api/suggestions", suggestionsRouter);
 // Use the new outfits router
 app.use("/api/outfits", outfitsRouter); // Updated route
 
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
