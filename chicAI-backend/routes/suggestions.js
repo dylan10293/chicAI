@@ -10,6 +10,29 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+router.get("/latest/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const db = getDb();
+
+    const latestSuggestion = await db.collection("suggestions").findOne({
+      userId,
+      createdAt: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+    });
+
+    if (!latestSuggestion) {
+      return res.status(404).json({ message: "No suggestions found within the last 24 hours." });
+    }
+
+    res.status(200).json({ suggestion: latestSuggestion });
+  } catch (error) {
+    console.error("Error fetching latest suggestion:", error);
+    res.status(500).json({ message: "Failed to fetch suggestion." });
+  }
+});
+
+
 router.post("/generate", async (req, res) => {
   const { userId } = req.body;
 

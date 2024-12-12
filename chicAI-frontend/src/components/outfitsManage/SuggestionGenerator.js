@@ -14,10 +14,30 @@ const SuggestionGenerator = () => {
   const [error, setError] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
+  const fetchLatestSuggestion = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/suggestions/latest/${userId}`);
+      setSuggestions(response.data.suggestion.suggestions);
+      return true;
+    } catch (err) {
+      if (err.response?.status === 404) {
+        return false; // No recent suggestion found
+      }
+      setError("Failed to fetch latest suggestion.");
+      return true;
+    }
+  };
+
   const handleGenerate = async () => {
     setLoading(true);
     setError("");
     setSuggestions([]);
+
+    const hasRecentSuggestion = await fetchLatestSuggestion();
+    if (hasRecentSuggestion) {
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await axios.post("http://localhost:8000/api/suggestions/generate", {
