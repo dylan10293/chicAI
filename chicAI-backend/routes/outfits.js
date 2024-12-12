@@ -69,7 +69,7 @@ router.post("/create", async (req, res) => {
 // Route to fetch all outfits
 router.get("/", async (req, res) => {
   try {
-    const db = getDb();f
+    const db = getDb();
 
     // Fetch all outfits from the outfits collection
     const outfits = await db.collection("outfits").find().toArray();

@@ -1,10 +1,7 @@
-//Display wardrobe items on the left.
-//Pick wardrobe items: check 
-//create outift from any wardrobe item. 
-
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import axios from "axios";
+import { FaTrash } from "react-icons/fa";
 
 const OutfitCreator = ({ userId }) => {
   const [wardrobeItems, setWardrobeItems] = useState([]);
@@ -26,7 +23,6 @@ const OutfitCreator = ({ userId }) => {
     fetchWardrobeItems();
   }, []);
 
-
   const fetchOutfits = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/outfits");
@@ -40,7 +36,6 @@ const OutfitCreator = ({ userId }) => {
   useEffect(() => {
     fetchOutfits();
   }, []);
-
 
   const toggleItemSelection = (itemId) => {
     setSelectedItems((prevSelected) =>
@@ -57,7 +52,7 @@ const OutfitCreator = ({ userId }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8000/api/outfits/create", {
+      await axios.post("http://localhost:8000/api/outfits/create", {
         name: outfitName,
         items: selectedItems,
         userId,
@@ -70,6 +65,17 @@ const OutfitCreator = ({ userId }) => {
     } catch (error) {
       console.error("Error creating outfit:", error);
       alert("Failed to create outfit.");
+    }
+  };
+
+  const deleteOutfit = async (outfitId) => {
+    try {
+      await axios.delete(`http://localhost:8000/api/outfits/${outfitId}`);
+      alert("Outfit deleted successfully!");
+      fetchOutfits(); // Refresh the outfits list
+    } catch (error) {
+      console.error("Error deleting outfit:", error);
+      alert("Failed to delete outfit.");
     }
   };
 
@@ -116,11 +122,21 @@ const OutfitCreator = ({ userId }) => {
 
         {/* Outfits Section */}
         <Col md={6}>
-          <h2>Saved Outfits</h2>
+          <h2>Created Outfits</h2>
           <Row>
             {outfits.map((outfit) => (
               <Col key={outfit._id} md={6}>
-                <Card style={{ margin: "10px" }}>
+                <Card style={{ margin: "10px", position: "relative" }}>
+                  <FaTrash
+                    style={{
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      cursor: "pointer",
+                      color: "red",
+                    }}
+                    onClick={() => deleteOutfit(outfit._id)}
+                  />
                   <Card.Body>
                     <Card.Title>{outfit.name}</Card.Title>
                     <Card.Text>
@@ -145,6 +161,5 @@ const OutfitCreator = ({ userId }) => {
     </Container>
   );
 };
-
 
 export default OutfitCreator;
