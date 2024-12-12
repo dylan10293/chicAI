@@ -16,6 +16,18 @@ router.post("/generate", async (req, res) => {
   try {
     const db = getDb();
 
+    // Check if the user has already generated a suggestion in the last 24 hours
+    const lastSuggestion = await db.collection("suggestions").findOne({
+      userId,
+      createdAt: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+    });
+
+    if (lastSuggestion) {
+      return res.status(400).json({
+        message: "You can only generate one suggestion per 24 hours. Try again later.",
+      });
+    }
+
     // Fetch wardrobe items linked to the user
     const wardrobeItems = await db.collection("wardrobe_suggestions_test")
       .find({ userId, laundryStatus: false })
