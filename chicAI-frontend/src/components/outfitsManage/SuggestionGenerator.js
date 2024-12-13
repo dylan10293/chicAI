@@ -82,17 +82,17 @@ const SuggestionGenerator = () => {
 
   return (
     <div>
-      <div className="mt-4">
-        {error && <Alert variant="danger">{error}</Alert>}
-        {success && <Alert variant="success">{success}</Alert>}
-        {suggestions.length > 0 && (
-          <div>
-            <h3>Suggestions</h3>
-            <Row className="g-3">
-              {suggestions.map((suggestion, index) => (
-                <Col xs={12} sm={6} md={4} className="d-flex" key={index}>
-                  <Card className="flex-fill">
-                    <Card.Body className="d-flex flex-column justify-content-between">
+      {error && <Alert variant="danger">{error}</Alert>}
+      {success && <Alert variant="success">{success}</Alert>}
+      {suggestions.length > 0 && (
+        <div>
+          <h3>Suggestions</h3>
+          <Row className="g-3">
+            {suggestions.map((suggestion, index) => (
+              <Col xs={12} sm={6} md={4} className="d-flex" key={index}>
+                <Card className="flex-fill">
+                  <Card.Body className="d-flex flex-column justify-content-between">
+                    <div>
                       <Card.Title>{suggestion.name}</Card.Title>
                       <Card.Text>
                         <strong>Items:</strong>
@@ -104,21 +104,21 @@ const SuggestionGenerator = () => {
                           ))}
                         </ul>
                       </Card.Text>
-                      <Button
-                        variant="success"
-                        disabled={loading}
-                        onClick={() => handleSave(suggestion)}
-                      >
-                        Save to Outfits
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-          </div>
-        )}
-      </div>
+                    </div>
+                    <Button
+                      variant="success"
+                      disabled={loading}
+                      onClick={() => handleSave(suggestion)}
+                    >
+                      Save to Outfits
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      )}
     </div>
   );
 };

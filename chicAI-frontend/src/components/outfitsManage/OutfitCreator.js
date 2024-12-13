@@ -43,8 +43,7 @@ const OutfitCreator = ({ userId }) => {
   }, []);
 
 
-   // Set a hardcoded username for now
-   useEffect(() => {
+  useEffect(() => {
     const tempUserName = "John"; // Replace with API call later
     setUserName(tempUserName);
 
@@ -105,13 +104,13 @@ const OutfitCreator = ({ userId }) => {
     }
   };
 
-  
+
 
   return (
     <Container fluid className="outfit-creator-container">
-       {/* SuggestionGenerator Integration */}
-     
-     <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
+      {/* SuggestionGenerator Integration */}
+
+      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Generate Suggestions</Modal.Title>
         </Modal.Header>
@@ -119,26 +118,27 @@ const OutfitCreator = ({ userId }) => {
           <SuggestionGenerator />
         </Modal.Body>
       </Modal>
+
       <Row>
-        
-      <Row className="header">
-        <Col>
-          <h1>Outfit Creator</h1>
-        </Col>
-        <Col className="text-end">
-        
-          User: {userName}!
-        </Col>
-      </Row>
+        <Row className="header">
+          <Col>
+            <h1>Outfit Creator</h1>
+          </Col>
+          <Col className="text-end">
+
+            User: {userName}!
+          </Col>
+        </Row>
+
         {/* Wardrobe Items Section */}
         <Col md={6} className="wardrobe-section">
-        <div className = "d-flex justify-content-between align-items-center">
-          <h2 className="section-title">Wardrobe Items</h2>
-          <Button variant="primary" onClick={() => setShowModal(true)} className="generate-suggestions-button">
-             Generate Suggestions
-          </Button>
-        </div>
-          
+          <div className="d-flex justify-content-between align-items-center pt-2 pb-2">
+            <h2 className="section-title">Wardrobe Items</h2>
+            <Button variant="primary" onClick={() => setShowModal(true)} className="generate-suggestions-button">
+              Generate Suggestions
+            </Button>
+          </div>
+
           <Form>
             <Form.Group>
               <Form.Label>Outfit Name</Form.Label>
@@ -152,70 +152,69 @@ const OutfitCreator = ({ userId }) => {
             </Form.Group>
           </Form>
 
-        <div className="wardrobe-items-scrollable">
-          <Row>
-            {wardrobeItems.map((item) => (
-              <Col key={item._id} md={6}>
-                <Card
-                  className={`wardrobe-card ${
-                    selectedItems.includes(item._id) ? "selected-card" : ""
-                  }`}
-                  onClick={() => toggleItemSelection(item._id)}
-                >
-                  <Card.Body>
-                    <Card.Title className="card-title">{item.name}</Card.Title>
-                    <Card.Text className="card-text">Type: {item.type}</Card.Text>
-                    <Card.Text className="card-text">Tags: {item.tags.join(", ")}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </div>
+          <div className="wardrobe-items-scrollable">
+            <Row>
+              {wardrobeItems.map((item) => (
+                <Col key={item._id} md={6} className="p-1">
+                  <Card
+                    className={`wardrobe-card ${selectedItems.includes(item._id) ? "selected-card" : ""
+                      }`}
+                    onClick={() => toggleItemSelection(item._id)}
+                  >
+                    <Card.Body>
+                      <Card.Title className="card-title">{item.name}</Card.Title>
+                      <Card.Text className="card-text">Type: {item.type}</Card.Text>
+                      <Card.Text className="card-text">Tags: {item.tags.join(", ")}</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </div>
           <Button className="create-outfit-button" onClick={createOutfit}>
             Create Outfit
           </Button>
         </Col>
-  
+
         {/* Outfits Section */}
         <Col md={6} className="outfits-section">
-          <h2 className="section-title">Created Outfits</h2>
+          <h2 className="section-title pt-2 pb-2">Created Outfits</h2>
 
           <div className="outfits-items-scrollable">
-          <Row>
-            {outfits.map((outfit) => (
-              <Col key={outfit._id} md={6}>
-                <Card className="outfit-card">
-                  <FaTrash
-                    className="delete-icon"
-                    onClick={() => deleteOutfit(outfit._id)}
-                  />
-                  <Card.Body>
-                    <Card.Title className="card-title">{outfit.name}</Card.Title>
-                    <Card.Text className="card-text">
-                      <strong>Items:</strong>{" "}
-                      {outfit.items.map((item, index) => (
-                        <span key={index}>
-                          {item.name} ({item.type})
-                          {index < outfit.items.length - 1 ? ", " : ""}
-                        </span>
-                      ))}
-                    </Card.Text>
-                    <Card.Text className="card-text">
-                      <strong>Tags:</strong>{" "}
-                      {outfit.items.flatMap((item) => item.tags).join(", ")}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </div>
+            <Row>
+              {outfits.map((outfit) => (
+                <Col key={outfit._id} md={6} className="p-1">
+                  <Card className="outfit-card">
+                    <FaTrash
+                      className="delete-icon"
+                      onClick={() => deleteOutfit(outfit._id)}
+                    />
+                    <Card.Body>
+                      <Card.Title className="card-title">{outfit.name}</Card.Title>
+                      <Card.Text className="card-text">
+                        <strong>Items:</strong>{" "}
+                        {outfit.items.map((item, index) => (
+                          <span key={index}>
+                            {item.name} ({item.type})
+                            {index < outfit.items.length - 1 ? ", " : ""}
+                          </span>
+                        ))}
+                      </Card.Text>
+                      <Card.Text className="card-text">
+                        <strong>Tags:</strong>{" "}
+                        {outfit.items.flatMap((item) => item.tags).join(", ")}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </div>
         </Col>
       </Row>
     </Container>
   );
-  
+
 };
 
 export default OutfitCreator;
