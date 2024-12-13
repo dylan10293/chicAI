@@ -2,6 +2,7 @@
 .outfit-creator-container {
   padding: 20px;
   background-color: #f9f9f9;
+  padding-top: 100px;
 }
 
 /* Section titles */
@@ -28,19 +29,19 @@
 }
 
 .selected-card {
-  border: 2px solid #c800ff;
+  border: 2px solid #b003b0;
 }
 
 /* Create outfit button */
 .create-outfit-button {
-  background-color: #cd0bde;
+  background-color: #b003b0;
   color: white;
   border: none;
   border-radius: 5px;
 }
 
 .create-outfit-button:hover {
-  background-color: #b3009e;
+  background-color: purple;
 }
 
 /* Outfits section styling */
@@ -63,11 +64,11 @@
   top: 10px;
   right: 10px;
   cursor: pointer;
-  color: purple;
+  color: #b003b0;
 }
 
 .delete-icon:hover {
-  color: rgb(75, 41, 83);
+  color: #800080;
 }
 
 /* Header styling */
@@ -76,8 +77,46 @@
   color: white; /* Text color */
   padding: 15px; /* Add some padding */
   display: flex; /* Use flexbox for alignment */
-  border-radius: 10px; /* Optional: rounded corners */
+  border-radius: 0px; /* Optional: rounded corners */
   margin-bottom: 20px; /* Space below the header */
   font-size: 1.2rem;
+  position: fixed;
+  top: 0;
+  margin: 0; 
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.generate-suggestions-button {
+  margin-right: 10px;
+  background-color: #b003b0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.generate-suggestions-button:hover {
+  background-color: #800080;
+}
+
+.wardrobe-items-scrollable {
+  height: 60vh; 
+  width: 100vh;
+  overflow: overlay;
+  border: 1px solid #ddd;
+  padding: 10px; 
+  background-color: #ffffff; 
+  margin-top: 15px;
+}
+
+.outfits-items-scrollable {
+  height: 72.3vh; 
+  width: 95vh;
+  overflow: overlay;
+  border: 1px solid #ddd;
+  padding: 10px; 
+  background-color: #ffffff; 
+  margin-top: 15px;
 }
 
