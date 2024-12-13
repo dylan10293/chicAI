@@ -109,8 +109,11 @@ const OutfitCreator = ({ userId }) => {
     <Container fluid className="outfit-creator-container">
       <Row>
       <Row className="header">
+        <Col>
+          <h1>Outfit Creator</h1>
+        </Col>
         <Col className="text-end">
-          <h4>User: {userName}!</h4>
+          User: {userName}!
         </Col>
       </Row>
         {/* Wardrobe Items Section */}

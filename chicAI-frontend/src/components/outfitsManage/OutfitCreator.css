@@ -69,3 +69,15 @@
 .delete-icon:hover {
   color: rgb(75, 41, 83);
 }
+
+/* Header styling */
+.header {
+  background-color: #800080; /* Purple background color */
+  color: white; /* Text color */
+  padding: 15px; /* Add some padding */
+  display: flex; /* Use flexbox for alignment */
+  border-radius: 10px; /* Optional: rounded corners */
+  margin-bottom: 20px; /* Space below the header */
+  font-size: 1.2rem;
+}
+
