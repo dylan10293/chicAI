@@ -52,7 +52,7 @@ router.post("/generate", async (req, res) => {
     }
 
     // Fetch wardrobe items linked to the user
-    const wardrobeItems = await db.collection("wardrobe_suggestions_test")
+    const wardrobeItems = await db.collection("wardrobe")
       .find({ userId, laundryStatus: false })
       .toArray();
 
@@ -126,7 +126,6 @@ router.post("/generate", async (req, res) => {
     });
 
     const message = "Outfit suggestions generated and saved successfully!"
-    console.log('message: ', message);
     res.status(201).json({
       message,
       userId,
