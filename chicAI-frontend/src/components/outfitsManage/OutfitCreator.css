@@ -2,6 +2,7 @@
 .outfit-creator-container {
   padding: 20px;
   background-color: #f9f9f9;
+  padding-top: 100px;
 }
 
 /* Section titles */
@@ -76,8 +77,14 @@
   color: white; /* Text color */
   padding: 15px; /* Add some padding */
   display: flex; /* Use flexbox for alignment */
-  border-radius: 10px; /* Optional: rounded corners */
+  border-radius: 0px; /* Optional: rounded corners */
   margin-bottom: 20px; /* Space below the header */
   font-size: 1.2rem;
+  position: fixed;
+  top: 0;
+  margin: 0; 
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
