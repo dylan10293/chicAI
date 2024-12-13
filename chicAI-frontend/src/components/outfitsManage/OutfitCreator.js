@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
+import './OutfitCreator.css';
+
 
 const OutfitCreator = ({ userId }) => {
   const [wardrobeItems, setWardrobeItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [outfitName, setOutfitName] = useState("");
   const [outfits, setOutfits] = useState([]);
+  const [userName, setUserName] = useState("");
 
   // Fetch wardrobe items
   useEffect(() => {
@@ -36,6 +39,27 @@ const OutfitCreator = ({ userId }) => {
   useEffect(() => {
     fetchOutfits();
   }, []);
+
+
+   // Set a hardcoded username for now
+   useEffect(() => {
+    const tempUserName = "John"; // Replace with API call later
+    setUserName(tempUserName);
+
+    // Uncomment code when integrated with the user API
+    /*
+    const fetchUserName = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/user/${userId}`);
+        setUserName(response.data.name);
+      } catch (error) {
+        console.error("Error fetching user name:", error);
+      }
+    };
+
+    fetchUserName();
+    */
+  }, [userId]);
 
   const toggleItemSelection = (itemId) => {
     setSelectedItems((prevSelected) =>
@@ -79,12 +103,19 @@ const OutfitCreator = ({ userId }) => {
     }
   };
 
+  
+
   return (
-    <Container fluid>
+    <Container fluid className="outfit-creator-container">
       <Row>
+      <Row className="header">
+        <Col className="text-end">
+          <h4>User: {userName}!</h4>
+        </Col>
+      </Row>
         {/* Wardrobe Items Section */}
-        <Col md={6}>
-          <h2>Wardrobe Items</h2>
+        <Col md={6} className="wardrobe-section">
+          <h2 className="section-title">Wardrobe Items</h2>
           <Form>
             <Form.Group>
               <Form.Label>Outfit Name</Form.Label>
@@ -93,6 +124,7 @@ const OutfitCreator = ({ userId }) => {
                 placeholder="Enter outfit name"
                 value={outfitName}
                 onChange={(e) => setOutfitName(e.target.value)}
+                className="outfit-name-input"
               />
             </Form.Group>
           </Form>
@@ -100,46 +132,39 @@ const OutfitCreator = ({ userId }) => {
             {wardrobeItems.map((item) => (
               <Col key={item._id} md={6}>
                 <Card
-                  style={{
-                    margin: "10px",
-                    border: selectedItems.includes(item._id) ? "2px solid blue" : "1px solid gray",
-                  }}
+                  className={`wardrobe-card ${
+                    selectedItems.includes(item._id) ? "selected-card" : ""
+                  }`}
                   onClick={() => toggleItemSelection(item._id)}
                 >
                   <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
-                    <Card.Text>Type: {item.type}</Card.Text>
-                    <Card.Text>Tags: {item.tags.join(", ")}</Card.Text>
+                    <Card.Title className="card-title">{item.name}</Card.Title>
+                    <Card.Text className="card-text">Type: {item.type}</Card.Text>
+                    <Card.Text className="card-text">Tags: {item.tags.join(", ")}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
             ))}
           </Row>
-          <Button className="mt-3" onClick={createOutfit}>
+          <Button className="create-outfit-button" onClick={createOutfit}>
             Create Outfit
           </Button>
         </Col>
-
+  
         {/* Outfits Section */}
-        <Col md={6}>
-          <h2>Created Outfits</h2>
+        <Col md={6} className="outfits-section">
+          <h2 className="section-title">Created Outfits</h2>
           <Row>
             {outfits.map((outfit) => (
               <Col key={outfit._id} md={6}>
-                <Card style={{ margin: "10px", position: "relative" }}>
+                <Card className="outfit-card">
                   <FaTrash
-                    style={{
-                      position: "absolute",
-                      top: "10px",
-                      right: "10px",
-                      cursor: "pointer",
-                      color: "red",
-                    }}
+                    className="delete-icon"
                     onClick={() => deleteOutfit(outfit._id)}
                   />
                   <Card.Body>
-                    <Card.Title>{outfit.name}</Card.Title>
-                    <Card.Text>
+                    <Card.Title className="card-title">{outfit.name}</Card.Title>
+                    <Card.Text className="card-text">
                       <strong>Items:</strong>{" "}
                       {outfit.items.map((item, index) => (
                         <span key={index}>
@@ -148,8 +173,9 @@ const OutfitCreator = ({ userId }) => {
                         </span>
                       ))}
                     </Card.Text>
-                    <Card.Text>
-                      <strong>Tags:</strong> {outfit.items.flatMap((item) => item.tags).join(", ")}
+                    <Card.Text className="card-text">
+                      <strong>Tags:</strong>{" "}
+                      {outfit.items.flatMap((item) => item.tags).join(", ")}
                     </Card.Text>
                   </Card.Body>
                 </Card>
@@ -160,6 +186,7 @@ const OutfitCreator = ({ userId }) => {
       </Row>
     </Container>
   );
+  
 };
 
 export default OutfitCreator;

@@ -1,0 +1,71 @@
+/* General container styling */
+.outfit-creator-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+/* Input field styling */
+.outfit-name-input {
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Card styling for wardrobe items */
+.wardrobe-card {
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.wardrobe-card:hover {
+  transform: scale(1.05);
+}
+
+.selected-card {
+  border: 2px solid #c800ff;
+}
+
+/* Create outfit button */
+.create-outfit-button {
+  background-color: #cd0bde;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.create-outfit-button:hover {
+  background-color: #b3009e;
+}
+
+/* Outfits section styling */
+.outfits-section {
+  padding-left: 20px;
+}
+
+.outfit-card {
+  position: relative;
+  transition: 0.3s ease-in-out;
+}
+
+.outfit-card:hover {
+  transform: scale(1.05);
+}
+
+/* Trashcan delete icon */
+.delete-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: purple;
+}
+
+.delete-icon:hover {
+  color: rgb(75, 41, 83);
+}
