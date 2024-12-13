@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Card, Modal } from "react-bootstrap"; // Added Modal here
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 import SuggestionGenerator from "./SuggestionGenerator";
@@ -12,6 +12,7 @@ const OutfitCreator = ({ userId }) => {
   const [outfitName, setOutfitName] = useState("");
   const [outfits, setOutfits] = useState([]);
   const [userName, setUserName] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   // Fetch wardrobe items
   useEffect(() => {
@@ -108,18 +109,36 @@ const OutfitCreator = ({ userId }) => {
 
   return (
     <Container fluid className="outfit-creator-container">
+       {/* SuggestionGenerator Integration */}
+     
+     <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Generate Suggestions</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <SuggestionGenerator />
+        </Modal.Body>
+      </Modal>
       <Row>
+        
       <Row className="header">
         <Col>
           <h1>Outfit Creator</h1>
         </Col>
         <Col className="text-end">
+        
           User: {userName}!
         </Col>
       </Row>
         {/* Wardrobe Items Section */}
         <Col md={6} className="wardrobe-section">
+        <div className = "d-flex justify-content-between align-items-center">
           <h2 className="section-title">Wardrobe Items</h2>
+          <Button variant="primary" onClick={() => setShowModal(true)} className="generate-suggestions-button">
+             Generate Suggestions
+          </Button>
+        </div>
+          
           <Form>
             <Form.Group>
               <Form.Label>Outfit Name</Form.Label>
@@ -132,6 +151,8 @@ const OutfitCreator = ({ userId }) => {
               />
             </Form.Group>
           </Form>
+
+        <div className="wardrobe-items-scrollable">
           <Row>
             {wardrobeItems.map((item) => (
               <Col key={item._id} md={6}>
@@ -150,6 +171,7 @@ const OutfitCreator = ({ userId }) => {
               </Col>
             ))}
           </Row>
+        </div>
           <Button className="create-outfit-button" onClick={createOutfit}>
             Create Outfit
           </Button>
@@ -158,6 +180,8 @@ const OutfitCreator = ({ userId }) => {
         {/* Outfits Section */}
         <Col md={6} className="outfits-section">
           <h2 className="section-title">Created Outfits</h2>
+
+          <div className="outfits-items-scrollable">
           <Row>
             {outfits.map((outfit) => (
               <Col key={outfit._id} md={6}>
@@ -186,6 +210,7 @@ const OutfitCreator = ({ userId }) => {
               </Col>
             ))}
           </Row>
+        </div>
         </Col>
       </Row>
     </Container>
