@@ -105,7 +105,7 @@ const OutfitCreator = ({ userId }) => {
           <Modal.Title>Generate Suggestions</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <SuggestionGenerator />
+          <SuggestionGenerator userId={userId} />
         </Modal.Body>
       </Modal>
 
@@ -152,6 +152,7 @@ const OutfitCreator = ({ userId }) => {
                     onClick={() => toggleItemSelection(item._id)}
                   >
                     <Card.Body>
+
                       <Card.Title className="card-title">{item.name}</Card.Title>
                       <Card.Text className="card-text">Type: {item.type}</Card.Text>
                       <Card.Text className="card-text">Tags: {item.tags.join(", ")}</Card.Text>

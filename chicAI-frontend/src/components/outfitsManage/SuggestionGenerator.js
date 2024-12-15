@@ -8,8 +8,7 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 import "./SuggestionGenerator.css";
 
-const SuggestionGenerator = () => {
-  const [userId, setUserId] = useState("user_2q0a6hxnhL1ou9w5PlVpD1P8wXh"); //TODO: fetch this userId to remove hardcoded data
+const SuggestionGenerator = ({ userId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -79,7 +78,12 @@ const SuggestionGenerator = () => {
     handleGenerate();
   }, []);
 
-
+  if (loading)
+    return (
+      <div>
+        loading...
+      </div>
+    )
   return (
     <div>
       {error && <Alert variant="danger">{error}</Alert>}
