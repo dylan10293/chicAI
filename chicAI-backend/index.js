@@ -3,6 +3,11 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import db from "./db/connection.js";
 import { clerkClient, requireAuth } from '@clerk/express'
+import dotenv from "dotenv";
+import suggestionsRouter from "./routes/suggestions.js";
+import outfitsRouter from "./routes/outfits.js";
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -38,6 +43,13 @@ app.post("/register", async (req, res) => {
 		res.status(500).json({ error: "Internal server error." });
 	}
 });
+
+// Routes
+app.use("/api/suggestions", suggestionsRouter);
+
+// Use the new outfits router
+app.use("/api/outfits", outfitsRouter); // Updated route
+
 
 app.listen(PORT, () => {
 	console.log(`Server listening on port ${PORT}`);
