@@ -7,9 +7,13 @@ const router = express.Router();
 // Route to fetch all wardrobe items
 router.get("/wardrobe", async (req, res) => {
   try {
+    const { userId } = req.query;
+    console.log('userId: ', userId);
 
     // Fetch all wardrobe items from the wardrobe collection
-    const wardrobeItems = await db.collection("wardrobe").find().toArray();
+    const wardrobeItems = await db.collection("wardrobe").find({
+      userId
+    }).toArray();
 
     // Respond with the fetched items
     res.status(200).json(wardrobeItems);
@@ -67,9 +71,12 @@ router.post("/create", async (req, res) => {
 // Route to fetch all outfits
 router.get("/", async (req, res) => {
   try {
+    const { userId } = req.query;
 
     // Fetch all outfits from the outfits collection
-    const outfits = await db.collection("outfits").find().toArray();
+    const outfits = await db.collection("outfits").find({
+      userId
+    }).toArray();
 
     // Respond with the fetched outfits
     res.status(200).json(outfits);

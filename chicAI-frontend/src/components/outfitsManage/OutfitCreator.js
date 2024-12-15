@@ -18,7 +18,9 @@ const OutfitCreator = ({ userId }) => {
   useEffect(() => {
     const fetchWardrobeItems = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/outfits/wardrobe");
+        const response = await axios.get("http://localhost:8000/api/outfits/wardrobe", {
+          params: { userId }
+        });
         setWardrobeItems(response.data);
       } catch (error) {
         console.error("Error fetching wardrobe items:", error);
@@ -30,7 +32,9 @@ const OutfitCreator = ({ userId }) => {
 
   const fetchOutfits = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/outfits");
+      const response = await axios.get("http://localhost:8000/api/outfits", {
+        params: { userId }
+      });
       setOutfits(response.data);
     } catch (error) {
       console.error("Error fetching outfits:", error);
@@ -46,20 +50,6 @@ const OutfitCreator = ({ userId }) => {
   useEffect(() => {
     const tempUserName = "John"; // Replace with API call later
     setUserName(tempUserName);
-
-    // Uncomment code when integrated with the user API
-    /*
-    const fetchUserName = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/api/user/${userId}`);
-        setUserName(response.data.name);
-      } catch (error) {
-        console.error("Error fetching user name:", error);
-      }
-    };
-
-    fetchUserName();
-    */
   }, [userId]);
 
   const toggleItemSelection = (itemId) => {
