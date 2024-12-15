@@ -175,7 +175,7 @@ const OutfitCreator = ({ userId }) => {
             <Row>
               {outfits.map((outfit) => (
                 <Col key={outfit._id} md={6} className="p-1">
-                  <Card className="outfit-card">
+                  <Card className="outfit-card h-100">
                     <FaTrash
                       className="delete-icon"
                       onClick={() => deleteOutfit(outfit._id)}

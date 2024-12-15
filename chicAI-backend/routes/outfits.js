@@ -8,7 +8,6 @@ const router = express.Router();
 router.get("/wardrobe", async (req, res) => {
   try {
     const { userId } = req.query;
-    console.log('userId: ', userId);
 
     // Fetch all wardrobe items from the wardrobe collection
     const wardrobeItems = await db.collection("wardrobe").find({
@@ -26,7 +25,6 @@ router.get("/wardrobe", async (req, res) => {
 // Route to save a grouped outfit
 router.post("/create", async (req, res) => {
   const { name, items, userId } = req.body; // Expecting name, items (array of wardrobeItemIds), and userId in the request body
-  console.log('name, items, userId: ', name, items, userId);
 
   if (!name || !items || items.length === 0 || !userId) {
     return res.status(400).json({ message: "Invalid input. Name, items, and userId are required." });
