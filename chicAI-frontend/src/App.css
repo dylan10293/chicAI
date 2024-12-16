@@ -44,3 +44,22 @@ a {
 	font-family: 'Poppins', sans-serif;
 	color: inherit;
 }
+
+.App {
+	text-align: center;
+	padding: 10px;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.nav-and-header {
+	display: flex;
+	background-color: rgba(174, 86, 196, 1);
+	color: white;
+}
+
+.navbar-brand-app {
+	text-align: left;
+	padding: 20px;
+	color: white;
+}
