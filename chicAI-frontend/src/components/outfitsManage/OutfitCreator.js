@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 import SuggestionGenerator from "./SuggestionGenerator";
 import './OutfitCreator.css';
+import { useAuth } from "@clerk/clerk-react";
 
 
 const OutfitCreator = ({ userId }) => {
@@ -13,6 +14,7 @@ const OutfitCreator = ({ userId }) => {
   const [outfits, setOutfits] = useState([]);
   const [userName, setUserName] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const {signOut} = useAuth();
 
   // Fetch wardrobe items
   useEffect(() => {
@@ -94,6 +96,9 @@ const OutfitCreator = ({ userId }) => {
     }
   };
 
+  const logOut = async () => {
+    await signOut();
+  }
 
 
   return (
@@ -115,9 +120,10 @@ const OutfitCreator = ({ userId }) => {
             <h1>Outfit Creator</h1>
           </Col>
           <Col className="text-end">
-
+           <Button onClick={()=> logOut()}> signOut </Button>
             User: {userName}!
           </Col>
+         
         </Row>
 
         {/* Wardrobe Items Section */}
