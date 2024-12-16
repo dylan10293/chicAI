@@ -14,7 +14,7 @@ const OutfitCreator = ({ userId }) => {
   const [outfits, setOutfits] = useState([]);
   const [userName, setUserName] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const {signOut} = useAuth();
+  const { signOut } = useAuth();
 
   // Fetch wardrobe items
   useEffect(() => {
@@ -115,16 +115,6 @@ const OutfitCreator = ({ userId }) => {
       </Modal>
 
       <Row>
-        <Row className="header">
-          <Col>
-            <h1>Outfit Creator</h1>
-          </Col>
-          <Col className="text-end">
-           <Button onClick={()=> logOut()}> signOut </Button>
-            User: {userName}!
-          </Col>
-         
-        </Row>
 
         {/* Wardrobe Items Section */}
         <Col md={6} className="wardrobe-section">

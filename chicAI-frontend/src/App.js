@@ -23,7 +23,7 @@ function App() {
     <Router>
       <Container className="App" fluid>
         {/* Header */}
-        <div className="nav-and-header">
+        {isSignedIn && <div className="nav-and-header">
           {/* Navigation Bar */}
           <NavigationBar />
 
@@ -36,7 +36,7 @@ function App() {
 
           {/* Header Content */}
           <Header />
-        </div>
+        </div>}
 
         <Routes>
           {/* Default Route */}
@@ -66,7 +66,7 @@ function App() {
         </Routes>
 
         {/* Footer Content */}
-        <Footer />
+        {isSignedIn && <Footer />}
       </Container>
     </Router>
 

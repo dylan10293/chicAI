@@ -2,3 +2,5 @@ chicAI-backend/app.yaml
 chicAI-frontend/app.yaml
 
 chicAI-frontend/.env
+chicAI-backend/yarn.lock
+chicAI-frontend/yarn.lock
