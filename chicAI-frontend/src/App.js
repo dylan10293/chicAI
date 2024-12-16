@@ -1,24 +1,46 @@
-import logo from './logo.svg';
 import './App.css';
+import { Container, Navbar } from 'react-bootstrap';
+import NavigationBar from './components/NavigationBar/NavigationBar'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import UserProfile from './components/UserProfile/UserProfile'; // Import User Profile Component
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Container className='App' fluid>
+        {/* Header */}
+        <div className='nav-and-header'>
+
+          {/* Navigation Bar */}
+          <NavigationBar />
+
+          {/* Nav Bar Brand */}
+          <div className='navbar-brand-app'>
+            <Navbar.Brand href="#chic-ai" className='navbar-brand'>
+              ChicAI
+            </Navbar.Brand>
+          </div>
+
+          {/* Header Content */}
+          <Header />
+        </div>
+
+        <Routes>
+            {/* Default Route */}
+            <Route path="/" element={<UserProfile />} /> {/* Updated to UserProfile */}
+            
+            {/* Specific Routes */}
+            <Route path="/" element={<UserProfile />} /> {/* User Profile Route */}
+        </Routes>
+
+        {/* Footer Content */}
+        <Footer />
+      </Container>
+    </Router>
   );
 }
 

@@ -1,0 +1,35 @@
+.user-profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 50px;
+  }
+  
+  .user-profile-container h2 {
+    text-align: center;
+  }
+  
+  .user-profile-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .user-profile-container input,
+  .user-profile-container button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .user-profile-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
