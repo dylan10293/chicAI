@@ -65,6 +65,18 @@
   align-items: flex-start;
 }
 
+/* Laundry status styles */
+.laundry-status.highlight {
+  background-color: #F5F5F5; /* Green for "In Laundry" */
+  color: #28a745;
+}
+
+.laundry-status.grey-out {
+  background-color: #6c757d; /* Grey for "Not in Laundry" */
+  color: white;
+  opacity: 0.7;
+}
+
 .delete-item {
   display: flex;
   justify-content: end;

@@ -1,45 +1,54 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './MainContent.css';
 import { Container, Stack, Card } from 'react-bootstrap';
 
 
 function MainContent() {
+  const [wardrobeItems, setWardrobeItems] = useState([]);
+
+  // Fetch data from the API
+  useEffect(() => {
+    fetch('http://localhost:8000/api/outfits/wardrobe') // Replace with your actual API URL
+      .then((response) => response.json())
+      .then((data) => {
+        setWardrobeItems(data); // Store the fetched wardrobe items in state
+      })
+      .catch((error) => console.error('Error fetching wardrobe items:', error));
+  }, []);
+
+
   return (
     <Container className="wardrobe-management-content" fluid>
     <Stack gap={3} className='wardrobe-management-content-stack'>
-      <div className="p-2">Sweaters
+    {wardrobeItems.map((item) => (
+
+      <div key={item._id} className="p-2">
+      {/* Group by type */}
+      {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+
       <Card className="wardrobe-management-card" style={{ width: '15rem' }}>
-      <Link to="/details" state={{ item: 'Red Sweater', img: '/dummy-sweater.png' }}>
+
+      <Link 
+      to="/details" 
+      state={{ item: item.name, 
+      img: '/dummy-sweater.png',
+      tags: item.tags || [], 
+      style: item.style,
+      color: item.color,
+      pattern: item.pattern,
+      }}
+      >
+
       <Card.Img variant="top" src='/dummy-sweater.png' />
       <Card.Body>
-        <Card.Text>Red Sweater</Card.Text>
+        <Card.Text>{item.name}</Card.Text>
       </Card.Body>
       </Link>
         </Card>
       </div>
 
-      <div className="p-2">Jackets
-      <Card className="wardrobe-management-card" style={{ width: '15rem' }}>
-      <Link to="/details" state={{ item: 'Yellow Jacket', img: '/dummy-jacket.png' }}>
-      <Card.Img variant="top" src='/dummy-jacket.png' />
-      <Card.Body>
-        <Card.Text>Yellow Jacket</Card.Text>
-      </Card.Body>
-      </Link>
-        </Card>
-        </div>
-
-      <div className="p-2">Tshirts
-      <Card className="wardrobe-management-card" style={{ width: '15rem' }}>
-      <Link to="/details" state={{ item: 'Green Tshirt', img: '/dummy-shirt.png' }}>
-      <Card.Img variant="top" src='/dummy-shirt.png' />
-      <Card.Body>
-        <Card.Text>Green Shirt</Card.Text>
-      </Card.Body>
-      </Link>
-        </Card>
-        </div>
-
+      ))}
     </Stack>
     </Container>
   );
