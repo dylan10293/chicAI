@@ -1,10 +1,15 @@
 import './AddTags.css';
+import { useLocation } from 'react-router-dom';
+
 
 import { useEffect, useState } from 'react';
 
 function AddTagsView({ itemId, onTagsAdded }) {
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
+
+  const location = useLocation();
+  const { _id } = location.state;
 
   // Fetch tags when the component is mounted
   useEffect(() => {
@@ -15,7 +20,7 @@ function AddTagsView({ itemId, onTagsAdded }) {
     }
     const fetchTags = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${itemId}/tags`);
+        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${_id}/tags`);
         if (response.ok) {
           const data = await response.json();
           setTags(data.tags); // Update the state with fetched tags
@@ -33,7 +38,7 @@ function AddTagsView({ itemId, onTagsAdded }) {
   const handleAddTag = async () => {
     if (tag) {
       try {
-        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${itemId}/tags`, {
+        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${_id}/tags`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

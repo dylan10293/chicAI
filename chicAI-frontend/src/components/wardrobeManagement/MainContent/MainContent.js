@@ -33,6 +33,7 @@ function MainContent() {
       to="/details" 
       state={{ item: item.name, 
       img: '/dummy-sweater.png',
+      _id: item._id,
       tags: item.tags || [], 
       style: item.style,
       color: item.color,

@@ -13,6 +13,7 @@ function ItemEditView() {
   const { item, img, laundryStatus, style, color, pattern, tags, _id } = location.state; // Destructure the item and its ID
 
   const [showEditTags, setShowEditTags] = useState(false); // State to control EditTagsView visibility
+  const [currentTags, setCurrentTags] = useState(tags || []);
 
   const handleEditTagsClick = () => {
     setShowEditTags(true); // Show the EditTagsView when clicked
@@ -23,9 +24,44 @@ function ItemEditView() {
   };
 
   // Function to refresh the tags after adding a new one
-  const handleTagsAdded = () => {
-    // Make sure to refetch the tags or pass the updated tags to the component
-    // You could re-fetch the wardrobe item or update the state directly.
+  const handleTagsAdded = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${_id}/tags`);
+      const data = await response.json();
+      if (response.ok) {
+        setCurrentTags(data.tags || []); // Update local tags state
+      } else {
+        console.error("Failed to fetch updated tags:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching updated tags:", error);
+    }
+  };
+
+  // Function to handle deleting the item
+  const handleDeleteItem = async () => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      try {
+        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${_id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          alert('Item deleted successfully!');
+          // Navigate back to the previous page or wardrobe list
+          window.location.href = '/wardrobe-management'; 
+        } else {
+          const data = await response.json();
+          alert(data.message || 'Failed to delete the item.');
+        }
+      } catch (error) {
+        console.error('Error deleting item:', error);
+        alert('An error occurred while deleting the item.');
+      }
+    }
   };
 
   return (
@@ -119,7 +155,7 @@ function ItemEditView() {
         </div>
 
         <div className='delete-item'>
-          <Button className='delete-button'> Delete Item </Button>
+          <Button className='delete-button' onClick={handleDeleteItem}> Delete Item </Button>
         </div>
 
         </Col>

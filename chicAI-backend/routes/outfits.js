@@ -74,6 +74,28 @@ router.post('/wardrobe/:itemId/tags', async (req, res) => {
   }
 });
 
+// DELETE: Delete a wardrobe item by ID
+router.delete('/wardrobe/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log('Fetching tags for itemId:', id); // Log itemId
+
+  try {
+    const db = getDb();
+
+    // Convert the id to ObjectId
+    const result = await db.collection('wardrobe').deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Wardrobe item not found' });
+    }
+
+    res.status(200).json({ message: 'Wardrobe item deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting wardrobe item:', error);
+    res.status(500).json({ message: 'Server error while deleting wardrobe item' });
+  }
+});
+
 // Route to save a grouped outfit
 router.post("/create", async (req, res) => {
   const { name, items, userId } = req.body; // Expecting name, items (array of wardrobeItemIds), and userId in the request body

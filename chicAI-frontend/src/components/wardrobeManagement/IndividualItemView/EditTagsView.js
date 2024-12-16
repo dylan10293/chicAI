@@ -4,21 +4,20 @@ import { useState, useEffect } from 'react';
 import { IoClose } from "react-icons/io5";
 import { useLocation } from 'react-router-dom';
 
-
-
-function EditTagsView({ itemId }) {
+function EditTagsView() {
   const [tags, setTags] = useState([]);
+  const location = useLocation();
+  const { _id } = location.state;
 
   const [showAddItems, setShowAddItems] = useState(false);
 
-  // Fetch tags from the backend API when the component mounts
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${itemId}/tags`);
+        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${_id}/tags`);
         const data = await response.json();
         if (response.ok) {
-          setTags(data.tags || []);  // Update the tags state with the fetched tags
+          setTags(data.tags || []);  
         } else {
           console.error("Failed to fetch tags:", data.message);
         }
@@ -28,7 +27,7 @@ function EditTagsView({ itemId }) {
     };
 
     fetchTags();
-  }, [itemId]);
+  }, [_id]);
 
   // Show AddItemsView
   const handleAddTagClick = () => {
@@ -47,7 +46,7 @@ function EditTagsView({ itemId }) {
     // Re-fetch the tags after adding a new one to update the list
     const fetchTags = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${itemId}/tags`);
+        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${_id}/tags`);
         const data = await response.json();
         if (response.ok) {
           setTags(data.tags || []);
@@ -79,7 +78,7 @@ function EditTagsView({ itemId }) {
       {showAddItems && (
         <div className="add-items-modal">
           <IoClose className="close-icon" onClick={handleCloseAddItems} />
-          <AddTagsView itemId={itemId} onTagsAdded={onTagsAdded} />
+          <AddTagsView itemId={_id} onTagsAdded={onTagsAdded} />
         </div>
       )}
 
