@@ -17,7 +17,7 @@ function EditTagsView() {
         const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${_id}/tags`);
         const data = await response.json();
         if (response.ok) {
-          setTags(data.tags || []);  
+          setTags(data.tags || []);
         } else {
           console.error("Failed to fetch tags:", data.message);
         }

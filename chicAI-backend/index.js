@@ -19,7 +19,6 @@ const usersCollection = db.collection("users");
 
 app.post("/register", async (req, res) => {
 	const { id, email_addresses, first_name, last_name } = req.body.data;
-	console.log('id: ', id);
 
 	try {
 		const existingUser = await usersCollection.findOne({ id });

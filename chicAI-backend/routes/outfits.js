@@ -25,8 +25,6 @@ router.get("/wardrobe", async (req, res) => {
 router.get('/wardrobe/:itemId/tags', async (req, res) => {
   const { itemId } = req.params;
 
-  console.log('Fetching tags for itemId:', itemId); // Log itemId
-
   try {
 
     // Find the wardrobe item by itemId in the collection
@@ -90,7 +88,6 @@ router.post("/create", async (req, res) => {
       .collection("wardrobe")
       .find({ _id: { $in: items.map((id) => new ObjectId(id)) } })
       .toArray();
-    console.log('wardrobeItems: ', wardrobeItems);
 
     if (wardrobeItems.length !== items.length) {
       return res.status(400).json({ message: "Some wardrobe items could not be found." });
@@ -122,7 +119,6 @@ router.post("/create", async (req, res) => {
 // DELETE: Delete a wardrobe item by ID
 router.delete('/wardrobe/:id', async (req, res) => {
   const { id } = req.params;
-  console.log('Fetching tags for itemId:', id); // Log itemId
 
   try {
     const db = getDb();
