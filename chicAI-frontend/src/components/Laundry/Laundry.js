@@ -71,7 +71,7 @@ function Laundry({ userId }) {
                 to="/details"
                 state={{
                   item: item.name,
-                  img: `https://dylan-cloudfront-testbucket.s3.us-east-2.amazonaws.com/${item._id}.jpg`,
+                  img: `https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`,
                   _id: item._id,
                   tags: item.tags || [],
                   style: item.style,
@@ -79,7 +79,7 @@ function Laundry({ userId }) {
                   pattern: item.pattern,
                 }}
               >
-                <Card.Img variant="top" src={`https://dylan-cloudfront-testbucket.s3.us-east-2.amazonaws.com/${item._id}.jpg`} />
+                <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
                 <Card.Body>
                   <Card.Text>{item.name}</Card.Text>
                 </Card.Body>
