@@ -66,14 +66,10 @@ function App() {
                 isSignedIn && userId ? <ProfilePage /> : <Navigate to="/" />
               }
             />
-            <Route path="/wardrobe-management" element={<WardrobeManagement userId={userId} />} />
-            <Route path="/laundry" element={<Laundry userId={userId} />} />
-            <Route path="/details" element={<Details userId={userId} />} />
-            <Route path="/profile" element={<ProfilePage userId={userId} />} />
-
             <Route path="/wardrobe-management" element={isSignedIn && userId ? <WardrobeManagement userId={userId} /> : <Navigate to="/" />} />
             <Route path="/laundry" element={isSignedIn && userId ? <Laundry userId={userId} /> : <Navigate to="/" />} />
             <Route path="/details" element={isSignedIn && userId ? <Details userId={userId} /> : <Navigate to="/" />} />
+            <Route path="/profile" element={<ProfilePage userId={userId} />} />
           </Routes>
         </Container>
 
