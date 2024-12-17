@@ -15,61 +15,58 @@ import Details from './components/wardrobeManagement/IndividualItemView/ItemEdit
 import './App.css';
 
 function App() {
-
   const { isSignedIn } = useUser();
   const { userId } = useAuth();
 
   return (
     <Router>
-      <Container className="App" fluid>
-        {/* Header */}
-        {isSignedIn && <div className="nav-and-header">
-          {/* Navigation Bar */}
-          <NavigationBar />
+      <div className="app-wrapper">
+        {isSignedIn && (
+          <div className="nav-and-header">
+            <NavigationBar />
 
-          {/* Nav Bar Brand */}
-          <div className="navbar-brand-app">
-            <Navbar.Brand href="#chic-ai" className="navbar-brand">
-              ChicAI
+            <Navbar.Brand href="/" className="navbar-brand">
+              <h3 className="text-light">ChicAI</h3>
             </Navbar.Brand>
+
+            <Header />
           </div>
+        )}
 
-          {/* Header Content */}
-          <Header />
-        </div>}
+        {/* Main Content */}
+        <Container className="main-content" fluid>
+          <Routes>
+            {/* Default Route */}
+            <Route
+              path="/"
+              element={
+                isSignedIn && userId ? <Navigate to="/outfits" /> : <Homepage />
+              }
+            />
 
-        <Routes>
-          {/* Default Route */}
-          <Route
-            path="/"
-            element={
-              isSignedIn && userId ? <Navigate to="/outfits" /> : <Homepage />
-            }
-          />
+            {/* Specific Routes */}
+            <Route
+              path="/outfits"
+              element={
+                isSignedIn && userId ? <OutfitCreator userId={userId} /> : <Navigate to="/" />
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                isSignedIn && userId ? <Dashboard /> : <Navigate to="/" />
+              }
+            />
+            <Route path="/wardrobe-management" element={<WardrobeManagement userId={userId} />} />
+            <Route path="/laundry" element={<Laundry userId={userId} />} />
+            <Route path="/details" element={<Details userId={userId} />} />
+          </Routes>
+        </Container>
 
-          {/* Specific Routes */}
-          <Route
-            path="/outfits"
-            element={
-              isSignedIn && userId ? <OutfitCreator userId={userId} /> : <Navigate to="/" />
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              isSignedIn && userId ? <Dashboard /> : <Navigate to="/" />
-            }
-          />
-          <Route path="/wardrobe-management" element={<WardrobeManagement />} />
-          <Route path="/laundry" element={<Laundry />} />
-          <Route path="/details" element={<Details />} />
-        </Routes>
-
-        {/* Footer Content */}
-        {isSignedIn && <Footer />}
-      </Container>
+        {/* Footer */}
+        <Footer />
+      </div>
     </Router>
-
   );
 }
 

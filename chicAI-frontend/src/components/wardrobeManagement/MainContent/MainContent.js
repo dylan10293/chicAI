@@ -4,7 +4,7 @@ import './MainContent.css';
 import { Container, Stack, Card } from 'react-bootstrap';
 
 
-function MainContent() {
+function MainContent({ userId }) {
   const [wardrobeItems, setWardrobeItems] = useState([]);
 
   // Fetch data from the API
@@ -20,37 +20,38 @@ function MainContent() {
 
   return (
     <Container className="wardrobe-management-content" fluid>
-    <Stack gap={3} className='wardrobe-management-content-stack'>
-    {wardrobeItems.map((item) => (
+      <Stack gap={3} className='wardrobe-management-content-stack'>
+        {wardrobeItems.map((item) => (
 
-      <div key={item._id} className="p-2">
-      {/* Group by type */}
-      {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+          <div key={item._id} className="p-2">
+            {/* Group by type */}
+            {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
 
-      <Card className="wardrobe-management-card" style={{ width: '15rem' }}>
+            <Card className="wardrobe-management-card" style={{ width: '15rem' }}>
 
-      <Link 
-      to="/details" 
-      state={{ item: item.name, 
-      img: '/dummy-sweater.png',
-      _id: item._id,
-      tags: item.tags || [], 
-      style: item.style,
-      color: item.color,
-      pattern: item.pattern,
-      }}
-      >
+              <Link
+                to="/details"
+                state={{
+                  item: item.name,
+                  img: '/dummy-sweater.png',
+                  _id: item._id,
+                  tags: item.tags || [],
+                  style: item.style,
+                  color: item.color,
+                  pattern: item.pattern,
+                }}
+              >
 
-      <Card.Img variant="top" src='/dummy-sweater.png' />
-      <Card.Body>
-        <Card.Text>{item.name}</Card.Text>
-      </Card.Body>
-      </Link>
-        </Card>
-      </div>
+                <Card.Img variant="top" src='/dummy-sweater.png' />
+                <Card.Body>
+                  <Card.Text>{item.name}</Card.Text>
+                </Card.Body>
+              </Link>
+            </Card>
+          </div>
 
-      ))}
-    </Stack>
+        ))}
+      </Stack>
     </Container>
   );
 }
