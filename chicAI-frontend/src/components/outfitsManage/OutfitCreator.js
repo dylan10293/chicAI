@@ -153,6 +153,9 @@ const OutfitCreator = ({ userId }) => {
                       onClick={() => toggleItemSelection(item._id)}
                     >
                       <Card.Body>
+                        <div className="image-container">
+                          <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
+                        </div>
                         <Card.Title className="card-title">{item.name}</Card.Title>
                         <Card.Text className="card-text">Type: {item.type}</Card.Text>
                         <Card.Text className="card-text">Tags: {item.tags.join(", ")}</Card.Text>
@@ -184,6 +187,15 @@ const OutfitCreator = ({ userId }) => {
                         onClick={() => deleteOutfit(outfit._id)}
                       />
                       <Card.Body>
+                        <div className="image-container">
+                          {outfit?.items.map(({ wardrobeItemId }) => (
+                            <Card.Img
+                              key={wardrobeItemId}
+                              variant="top"
+                              src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${wardrobeItemId}.jpg`}
+                            />
+                          ))}
+                        </div>
                         <Card.Title className="card-title">{outfit.name}</Card.Title>
                         <Card.Text className="card-text">
                           <strong>Items:</strong>{" "}

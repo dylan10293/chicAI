@@ -68,8 +68,9 @@ app.post('/api/wardrobe/add', upload.single('image'), async (req, res) => {
 		if (!name || !type || !tags || !tags.length || !userId) {
 			return res.status(400).json({ error: "Missing required fields: name, type, tags (non-empty), or userId." });
 		}
+		const tagsArray = Array.isArray(tags) ? tags : tags.split(',').map(tag => tag.trim());
 
-		const newItem = { name, type, tags, userId, laundryStatus: false };
+		const newItem = { name, type, tags: tagsArray, userId, laundryStatus: false };
 		if (color) newItem.color = color;
 		if (pattern) newItem.pattern = pattern;
 		if (style) newItem.style = style;

@@ -5,6 +5,7 @@ import Alert from "react-bootstrap/Alert";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import "./SuggestionGenerator.css";
 
@@ -82,8 +83,10 @@ const SuggestionGenerator = ({ userId }) => {
 
   if (loading)
     return (
-      <div>
-        loading...
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+        <Spinner animation="border" role="status" variant="primary">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
       </div>
     )
   return (
@@ -102,6 +105,15 @@ const SuggestionGenerator = ({ userId }) => {
                       <Card.Title>{suggestion.name}</Card.Title>
                       <Card.Text>
                         <strong>Items:</strong>
+                        <div className="image-container">
+                          {suggestion?.items.map(({ wardrobeItemId }) => (
+                            <Card.Img
+                              key={wardrobeItemId}
+                              variant="top"
+                              src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${wardrobeItemId}.jpg`}
+                            />
+                          ))}
+                        </div>
                         <ul>
                           {suggestion.items.map((item, idx) => (
                             <li key={idx}>

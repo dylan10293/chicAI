@@ -74,6 +74,42 @@ router.post('/wardrobe/:itemId/tags', async (req, res) => {
   }
 });
 
+// Route to update style, color, and pattern for a specific item
+router.patch('/wardrobe/:id', async (req, res) => {
+  const { id } = req.params;
+  const { style, color, pattern } = req.body;
+
+  try {
+    // Find the item by ID
+    const item = await db.collection('wardrobe').findOne({ _id: new ObjectId(id) });
+
+    if (!item) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    // Update the item's fields if provided
+    const updatedItem = await db.collection('wardrobe').updateOne(
+      { _id: new ObjectId(id) },
+      {
+        $set: {
+          style: style || item.style,
+          color: color || item.color,
+          pattern: pattern || item.pattern
+        }
+      }
+    );
+
+    if (updatedItem.modifiedCount > 0) {
+      return res.status(200).json({ message: 'Item updated successfully' });
+    } else {
+      return res.status(400).json({ message: 'No changes made' });
+    }
+  } catch (error) {
+    console.error('Error updating item:', error);
+    return res.status(500).json({ message: 'Failed to update item' });
+  }
+});
+
 // Route to save a grouped outfit
 router.post("/create", async (req, res) => {
   const { name, items, userId } = req.body; // Expecting name, items (array of wardrobeItemIds), and userId in the request body

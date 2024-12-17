@@ -121,3 +121,21 @@
 	background-color: #ffffff;
 	/* margin-top: 15px; */
 }
+
+.image-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 5px;
+	margin-bottom: 10px;
+}
+
+.image-container img {
+	width: 100%;
+	max-width: 150px;
+	height: 150px;
+	object-fit: contain;
+	border-radius: 8px;
+	/* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+}
