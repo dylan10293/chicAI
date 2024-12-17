@@ -10,9 +10,10 @@ router.get("/wardrobe", async (req, res) => {
     const { userId } = req.query;
 
     // Fetch all wardrobe items from the wardrobe collection
-    const wardrobeItems = await db.collection("wardrobe").find({
-      //userId
-    }).toArray();
+    const wardrobeItems = await db
+      .collection("wardrobe")
+      .find({userId})
+      .toArray();
 
     // Respond with the fetched items
     res.status(200).json(wardrobeItems);
@@ -70,6 +71,42 @@ router.post('/wardrobe/:itemId/tags', async (req, res) => {
   } catch (error) {
     console.error('Error adding tag:', error);
     return res.status(500).json({ message: 'Failed to add tag' });
+  }
+});
+
+// Route to update style, color, and pattern for a specific item
+router.patch('/wardrobe/:id', async (req, res) => {
+  const { id } = req.params;
+  const { style, color, pattern } = req.body;
+
+  try {
+    // Find the item by ID
+    const item = await db.collection('wardrobe').findOne({ _id: new ObjectId(id) });
+
+    if (!item) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    // Update the item's fields if provided
+    const updatedItem = await db.collection('wardrobe').updateOne(
+      { _id: new ObjectId(id) },
+      {
+        $set: {
+          style: style || item.style,
+          color: color || item.color,
+          pattern: pattern || item.pattern
+        }
+      }
+    );
+
+    if (updatedItem.modifiedCount > 0) {
+      return res.status(200).json({ message: 'Item updated successfully' });
+    } else {
+      return res.status(400).json({ message: 'No changes made' });
+    }
+  } catch (error) {
+    console.error('Error updating item:', error);
+    return res.status(500).json({ message: 'Failed to update item' });
   }
 });
 

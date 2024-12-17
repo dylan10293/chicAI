@@ -1,6 +1,6 @@
 import './ItemEdit.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Col, Button } from 'react-bootstrap';
+import { Container, Col, Button, Form } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import EditTagsView from './EditTagsView';
 import { FaRegEdit } from "react-icons/fa";
@@ -15,6 +15,16 @@ function ItemEditView() {
 
   const [showEditTags, setShowEditTags] = useState(false); // State to control EditTagsView visibility
   const [currentTags, setCurrentTags] = useState(tags || []);
+
+  // States to manage whether each field is in edit mode
+  const [isEditingStyle, setIsEditingStyle] = useState(false);
+  const [isEditingColor, setIsEditingColor] = useState(false);
+  const [isEditingPattern, setIsEditingPattern] = useState(false);
+
+  // State to manage the editable fields
+  const [newStyle, setNewStyle] = useState(style || '');
+  const [newColor, setNewColor] = useState(color || '');
+  const [newPattern, setNewPattern] = useState(pattern || '');
 
   const handleEditTagsClick = () => {
     setShowEditTags(true); // Show the EditTagsView when clicked
@@ -38,6 +48,53 @@ function ItemEditView() {
       console.error("Error fetching updated tags:", error);
     }
   };
+
+  // Handle form submission to update style, color, and pattern
+  const handleUpdateItem = async () => {
+  const updatedData = {};
+
+  // Only add the field if it's updated
+  if (newStyle !== style) updatedData.style = newStyle;
+  if (newColor !== color) updatedData.color = newColor;
+  if (newPattern !== pattern) updatedData.pattern = newPattern;
+
+  // If no fields are updated, alert and return early
+  if (Object.keys(updatedData).length === 0) {
+    alert('No changes were made.');
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/outfits/wardrobe/${_id}`, {
+      method: 'PATCH',  // Changed to PATCH as per the backend
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (response.ok) {
+      alert('Item updated successfully!');
+      window.location.reload(); // Reload the page to reflect the changes
+    } else {
+      const data = await response.json();
+      alert(data.message || 'Failed to update the item.');
+    }
+  } catch (error) {
+    console.error('Error updating item:', error);
+    alert('An error occurred while updating the item.');
+  }
+};
+
+// Function to handle closing the edit view
+const handleCloseEditView = () => {
+  setIsEditingStyle(false);
+  setIsEditingColor(false);
+  setIsEditingPattern(false);
+  setNewStyle(style);
+  setNewColor(color);
+  setNewPattern(pattern);
+};
 
   // Function to handle deleting the item
   const handleDeleteItem = async () => {
@@ -106,33 +163,95 @@ function ItemEditView() {
           <div className="edit-field">
             <div className="label-icon-row">
               <label>Style</label>
-              <FaRegEdit className="edit-icon" />
+              <FaRegEdit className="edit-icon" onClick={() => setIsEditingStyle(true)} />
             </div>
             <Col className='tags-align'>
               {/* Render dynamic style */}
               <div className='tags'>{style || 'No style available'}</div>
+              {isEditingStyle && (
+                <div>
+                {/* Close icon to exit edit mode */}
+                <IoClose className="close-icon" onClick={() => {
+                setIsEditingStyle(false); // Close the edit mode for Style
+                setNewStyle(style); // Reset the input field to the original value
+                }} />
+
+                <Form.Control 
+                  type="text" 
+                  value={newStyle} 
+                  onChange={(e) => setNewStyle(e.target.value)} 
+                  placeholder="Enter style"
+                />
+
+                <div className='update-item'>
+                <Button className="update-button" onClick={handleUpdateItem}>Update Item</Button>
+                </div>
+                </div>
+
+              )}
             </Col>
           </div>
 
           <div className="edit-field">
             <div className="label-icon-row">
               <label>Color</label>
-              <FaRegEdit className="edit-icon" />
+              <FaRegEdit className="edit-icon" onClick={() => setIsEditingColor(true)} />
             </div>
             <Col className='tags-align'>
               {/* Render dynamic style */}
               <div className='tags'>{color || 'No color available'}</div>
+              {isEditingColor && (
+                <div>
+                  {/* Close icon to exit edit mode */}
+                <IoClose className="close-icon" onClick={() => {
+                setIsEditingColor(false); // Close the edit mode for Color
+                setNewColor(color); // Reset the input field to the original value
+                }} />
+                
+                <Form.Control 
+                  type="text" 
+                  value={newColor} 
+                  onChange={(e) => setNewColor(e.target.value)} 
+                  placeholder="Enter color"
+                />
+
+                <div className='update-item'>
+                <Button className="update-button" onClick={handleUpdateItem}>Update Item</Button>
+                </div>
+                </div>
+              )}
             </Col>
           </div>
 
           <div className="edit-field">
             <div className="label-icon-row">
               <label>Pattern</label>
-              <FaRegEdit className="edit-icon" />
+              <FaRegEdit className="edit-icon" onClick={() => setIsEditingPattern(true)} />
             </div>
             <Col className='tags-align'>
               {/* Render dynamic style */}
               <div className='tags'>{pattern || 'No pattern available'}</div>
+              {isEditingPattern && (
+                <div>
+                {/* Close icon to exit edit mode */}
+                <IoClose className="close-icon" onClick={() => {
+                setIsEditingPattern(false); // Close the edit mode for Pattern
+                setNewPattern(pattern); // Reset the input field to the original value
+                }} />
+
+                <Form.Control 
+                  type="text" 
+                  value={newPattern} 
+                  onChange={(e) => setNewPattern(e.target.value)} 
+                  placeholder="Enter pattern"
+                />
+
+                <div className='update-item'>
+                <Button className="update-button" onClick={handleUpdateItem}>Update Item</Button>
+                </div>
+                </div>
+
+              )}
             </Col>
           </div>
 
@@ -140,7 +259,6 @@ function ItemEditView() {
           <div className="edit-field">
             <div className="label-icon-row">
               <label>Laundry Status</label>
-              <FaRegEdit className="edit-icon" />
             </div>
 
             <Col className='tags-align'>
