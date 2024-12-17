@@ -102,6 +102,15 @@ const SuggestionGenerator = ({ userId }) => {
                       <Card.Title>{suggestion.name}</Card.Title>
                       <Card.Text>
                         <strong>Items:</strong>
+                        <div className="image-container">
+                          {suggestion?.items.map(({ wardrobeItemId }) => (
+                            <Card.Img
+                              key={wardrobeItemId}
+                              variant="top"
+                              src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${wardrobeItemId}.jpg`}
+                            />
+                          ))}
+                        </div>
                         <ul>
                           {suggestion.items.map((item, idx) => (
                             <li key={idx}>
