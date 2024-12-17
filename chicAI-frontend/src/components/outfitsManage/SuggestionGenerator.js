@@ -5,6 +5,7 @@ import Alert from "react-bootstrap/Alert";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import "./SuggestionGenerator.css";
 
@@ -82,8 +83,10 @@ const SuggestionGenerator = ({ userId }) => {
 
   if (loading)
     return (
-      <div>
-        loading...
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+        <Spinner animation="border" role="status" variant="primary">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
       </div>
     )
   return (
