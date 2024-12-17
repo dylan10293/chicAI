@@ -10,9 +10,10 @@ router.get("/wardrobe", async (req, res) => {
     const { userId } = req.query;
 
     // Fetch all wardrobe items from the wardrobe collection
-    const wardrobeItems = await db.collection("wardrobe").find({
-      //userId
-    }).toArray();
+    const wardrobeItems = await db
+      .collection("wardrobe")
+      .find({userId})
+      .toArray();
 
     // Respond with the fetched items
     res.status(200).json(wardrobeItems);
