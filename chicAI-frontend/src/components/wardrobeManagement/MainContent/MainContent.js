@@ -10,7 +10,7 @@ function MainContent({ userId }) {
 
   // Fetch data from the API
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/outfits/wardrobe`) // Replace with your actual API URL
+    fetch(`${API_BASE_URL}/api/outfits/wardrobe?userId=${userId}`) // Replace with your actual API URL
       .then((response) => response.json())
       .then((data) => {
         setWardrobeItems(data); // Store the fetched wardrobe items in state
