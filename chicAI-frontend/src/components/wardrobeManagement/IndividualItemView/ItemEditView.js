@@ -66,7 +66,7 @@ function ItemEditView() {
 
   try {
     const response = await fetch(`${API_BASE_URL}/api/outfits/wardrobe/${_id}`, {
-      method: 'PATCH',  // Changed to PATCH as per the backend
+      method: 'PATCH',  
       headers: {
         'Content-Type': 'application/json',
       },
@@ -94,6 +94,29 @@ const handleCloseEditView = () => {
   setNewStyle(style);
   setNewColor(color);
   setNewPattern(pattern);
+};
+
+const handleToggleLaundryStatus = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/laundry/${_id}/toggle-laundry`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert(`Laundry status updated to: ${data.laundryStatus ? 'In Laundry' : 'Available'}`);
+      window.location.reload(); // Reload to reflect the updated status
+    } else {
+      alert(data.message || 'Failed to update laundry status.');
+    }
+  } catch (error) {
+    console.error('Error toggling laundry status:', error);
+    alert('An error occurred while updating laundry status.');
+  }
 };
 
   // Function to handle deleting the item
@@ -269,6 +292,13 @@ const handleCloseEditView = () => {
               >
                 {laundryStatus ? 'In Laundry' : 'Available'}
               </div>
+              <Button
+              className="toggle-laundry-button"
+              onClick={handleToggleLaundryStatus}
+              variant={laundryStatus ? 'secondary' : 'success'}
+              >
+              {laundryStatus ? 'Mark as Available' : 'Mark as In Laundry'}
+              </Button>
             </Col>
           </div>
 

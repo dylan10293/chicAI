@@ -94,6 +94,12 @@
   border-color: #F5F5F5;
 }
 
+.toggle-laundry-button {
+  margin-top: 10px;
+  padding: 5px 15px;
+  font-size: 14px;
+}
+
 .update-item {
   display: flex;
   justify-content: end;
