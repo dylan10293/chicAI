@@ -6,6 +6,7 @@ import { clerkClient, requireAuth } from '@clerk/express'
 import dotenv from "dotenv";
 import suggestionsRouter from "./routes/suggestions.js";
 import outfitsRouter from "./routes/outfits.js";
+import laundryRouter from "./routes/laundry.js";
 
 dotenv.config();
 
@@ -49,6 +50,7 @@ app.use("/api/suggestions", suggestionsRouter);
 // Use the new outfits router
 app.use("/api/outfits", outfitsRouter); // Updated route
 
+app.use("/api/laundry", laundryRouter);
 
 app.listen(PORT, () => {
 	console.log(`Server listening on port ${PORT}`);
