@@ -16,12 +16,12 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 app.use(bodyParser.json());
 
-const usersCollection = db.collection("users");
 
 app.post("/register", async (req, res) => {
 	const { id, email_addresses, first_name, last_name } = req.body.data;
 
 	try {
+		const usersCollection = db.collection("users");
 		const existingUser = await usersCollection.findOne({ id });
 
 		if (existingUser) {
@@ -41,6 +41,34 @@ app.post("/register", async (req, res) => {
 	} catch (error) {
 		console.error("Error creating user:", error);
 		res.status(500).json({ error: "Internal server error." });
+	}
+});
+
+app.post('/api/wardrobe/add', async (req, res) => {
+	try {
+
+		const wardrobeCollection = db.collection('wardrobe');
+
+		const { name, type, tags, userId, color, pattern, style } = req.body;
+
+		if (!name || !type || !tags || !tags.length || !userId) {
+			return res.status(400).json({ error: "Missing required fields: name, type, tags (non-empty), or userId." });
+		}
+
+		const newItem = { name, type, tags, userId, laundryStatus: false };
+		if (color) newItem.color = color;
+		if (pattern) newItem.pattern = pattern;
+		if (style) newItem.style = style;
+
+		const result = await wardrobeCollection.insertOne(newItem);
+
+		res.status(201).json({
+			message: "Item successfully added to wardrobe!",
+			itemId: result.insertedId
+		});
+	} catch (error) {
+		console.error("Error adding item to wardrobe:", error);
+		res.status(500).json({ error: "An error occurred while adding the item." });
 	}
 });
 
