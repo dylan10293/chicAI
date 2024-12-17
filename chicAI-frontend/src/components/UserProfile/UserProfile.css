@@ -27,7 +27,7 @@
   }
   
   .user-profile-container button {
-    background-color: #007bff;
+    background-color: rgba(174, 86, 196, 1);
     color: white;
     border: none;
     cursor: pointer;

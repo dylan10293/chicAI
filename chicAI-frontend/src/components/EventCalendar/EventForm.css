@@ -1,0 +1,54 @@
+/* EventForm.css */
+
+/* General form container */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Input fields */
+  form input {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+  }
+  
+  form input:focus {
+    outline: none;
+    border-color: rgb(197, 124, 215);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  }
+  
+  /* Submit button */
+  form button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    color: white;
+    background-color: rgba(174, 86, 196, 1);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  form button:hover {
+    background-color: #e0b2e1;
+  }
+  
+  /* Placeholder style for empty fields */
+  form input::placeholder {
+    color: #aaa;
+    font-style: italic;
+  }
+  

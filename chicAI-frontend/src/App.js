@@ -7,6 +7,7 @@ import Footer from './components/Footer/Footer';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 import UserProfile from './components/UserProfile/UserProfile'; // Import User Profile Component
+import EventCalendar from './components/EventCalendar/EventCalendar';
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
 
         <Routes>
             {/* Default Route */}
-            <Route path="/" element={<UserProfile />} /> {/* Updated to UserProfile */}
+            <Route path="/" element={<EventCalendar />} /> {/* Updated to UserProfile */}
             
             {/* Specific Routes */}
             <Route path="/" element={<UserProfile />} /> {/* User Profile Route */}
