@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import './MainContent.css';
 import { Container, Stack, Card } from 'react-bootstrap';
 
+const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
 
 function MainContent({ userId }) {
   const [wardrobeItems, setWardrobeItems] = useState([]);
 
   // Fetch data from the API
   useEffect(() => {
-    fetch('http://localhost:8000/api/outfits/wardrobe') // Replace with your actual API URL
+    fetch(`${API_BASE_URL}/api/outfits/wardrobe`) // Replace with your actual API URL
       .then((response) => response.json())
       .then((data) => {
         setWardrobeItems(data); // Store the fetched wardrobe items in state

@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { IoClose } from "react-icons/io5";
 import { useLocation } from 'react-router-dom';
 
+const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+
 function EditTagsView() {
   const [tags, setTags] = useState([]);
   const location = useLocation();
@@ -14,7 +16,7 @@ function EditTagsView() {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${_id}/tags`);
+        const response = await fetch(`${API_BASE_URL}/api/outfits/wardrobe/${_id}/tags`);
         const data = await response.json();
         if (response.ok) {
           setTags(data.tags || []);
@@ -46,7 +48,7 @@ function EditTagsView() {
     // Re-fetch the tags after adding a new one to update the list
     const fetchTags = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/outfits/wardrobe/${_id}/tags`);
+        const response = await fetch(`${API_BASE_URL}/api/outfits/wardrobe/${_id}/tags`);
         const data = await response.json();
         if (response.ok) {
           setTags(data.tags || []);

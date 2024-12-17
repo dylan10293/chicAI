@@ -3,6 +3,8 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import OutfitCard from "./OutfitCard";
 
+const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+
 const OutfitManagement = ({ userId }) => {
   const [suggestedOutfits, setSuggestedOutfits] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -12,7 +14,7 @@ const OutfitManagement = ({ userId }) => {
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/suggestions/${userId}`);
+        const response = await axios.get(`${API_BASE_URL}/api/suggestions/${userId}`);
         setSuggestedOutfits(response.data);
       } catch (error) {
         console.error("Error fetching suggestions:", error);
@@ -26,7 +28,7 @@ const OutfitManagement = ({ userId }) => {
   useEffect(() => {
     const fetchSavedOutfits = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/suggestions/saved");
+        const response = await axios.get(`${API_BASE_URL}/api/suggestions/saved`);
         setSavedOutfits(response.data);
       } catch (error) {
         console.error("Error fetching saved outfits:", error);
@@ -38,31 +40,31 @@ const OutfitManagement = ({ userId }) => {
 
   const generateSuggestions = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/api/suggestions/generate", {
+      const response = await axios.post(`${API_BASE_URL}/api/suggestions/generate`, {
         userId,
       });
-  
+
       alert(response.data.message); // Display success message
-  
+
       // Refresh the suggestions after generation
-      const updatedSuggestions = await axios.get(`http://localhost:8000/api/suggestions/${userId}`);
+      const updatedSuggestions = await axios.get(`${API_BASE_URL}/api/suggestions/${userId}`);
       setSuggestedOutfits(updatedSuggestions.data);
     } catch (error) {
       console.error("Error generating suggestions:", error.response?.data || error.message);
       alert(`Failed to generate suggestions: ${error.response?.data?.message || "Unknown error"}`);
     }
   };
-  
-  
-  
-  
-  
+
+
+
+
+
 
   const saveOutfit = async () => {
     try {
       const outfitToSave = suggestedOutfits[currentIndex];
       if (!savedOutfits.some((outfit) => outfit._id === outfitToSave._id)) {
-        const response = await axios.post("http://localhost:8000/api/suggestions/save", outfitToSave);
+        const response = await axios.post(`${API_BASE_URL}/api/suggestions/save`, outfitToSave);
         setSavedOutfits([...savedOutfits, { ...outfitToSave, _id: response.data.id }]);
       } else {
         alert("This outfit is already saved!");
@@ -86,7 +88,7 @@ const OutfitManagement = ({ userId }) => {
 
   const deleteSuggestions = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8000/api/suggestions/${userId}`);
+      const response = await axios.delete(`${API_BASE_URL}/api/suggestions/${userId}`);
       alert(`${response.data.deletedCount} suggestions deleted successfully!`);
       setSuggestedOutfits([]); // Clear suggestions from the UI
     } catch (error) {
@@ -95,8 +97,8 @@ const OutfitManagement = ({ userId }) => {
     }
   };
 
-  
-  
+
+
 
   return (
     <Container fluid>
@@ -106,9 +108,9 @@ const OutfitManagement = ({ userId }) => {
           <h2>Swipe Section</h2>
 
 
-            <Button onClick={deleteSuggestions} className="mb-3" variant="danger">
-              Delete All Suggestions
-            </Button>
+          <Button onClick={deleteSuggestions} className="mb-3" variant="danger">
+            Delete All Suggestions
+          </Button>
           <Button onClick={generateSuggestions} className="mb-3">
             Generate Suggestions
           </Button>

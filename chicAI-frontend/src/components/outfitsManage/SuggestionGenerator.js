@@ -8,6 +8,8 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 import "./SuggestionGenerator.css";
 
+const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+
 const SuggestionGenerator = ({ userId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -16,7 +18,7 @@ const SuggestionGenerator = ({ userId }) => {
 
   const fetchLatestSuggestion = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/suggestions/latest/${userId}`);
+      const response = await axios.get(`${API_BASE_URL}/api/suggestions/latest/${userId}`);
       setSuggestions(response.data.suggestion.suggestions);
       setSuccess("Loaded previous suggestion as a new suggestion can only be generated once per 24 hours");
       return true;
@@ -44,7 +46,7 @@ const SuggestionGenerator = ({ userId }) => {
 
     // Generate a new suggestion if none exists
     try {
-      const response = await axios.post("http://localhost:8000/api/suggestions/generate", {
+      const response = await axios.post(`${API_BASE_URL}/api/suggestions/generate`, {
         userId,
       });
       setSuggestions(response.data.suggestions);
@@ -61,7 +63,7 @@ const SuggestionGenerator = ({ userId }) => {
     setSuccess("");
 
     try {
-      await axios.post("http://localhost:8000/api/outfits/create", {
+      await axios.post(`${API_BASE_URL}/api/outfits/create`, {
         name: outfit.name,
         items: outfit.items.map((item) => item.wardrobeItemId), // Send wardrobeItemIds only
         userId,

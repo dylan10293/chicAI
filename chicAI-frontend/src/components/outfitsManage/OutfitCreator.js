@@ -6,6 +6,7 @@ import SuggestionGenerator from "./SuggestionGenerator";
 import './OutfitCreator.css';
 import { useAuth } from "@clerk/clerk-react";
 
+const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
 
 const OutfitCreator = ({ userId }) => {
   const [wardrobeItems, setWardrobeItems] = useState([]);
@@ -20,7 +21,7 @@ const OutfitCreator = ({ userId }) => {
   useEffect(() => {
     const fetchWardrobeItems = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/outfits/wardrobe", {
+        const response = await axios.get(`${API_BASE_URL}/api/outfits/wardrobe`, {
           params: { userId }
         });
         setWardrobeItems(response.data);
@@ -34,7 +35,7 @@ const OutfitCreator = ({ userId }) => {
 
   const fetchOutfits = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/outfits", {
+      const response = await axios.get(`${API_BASE_URL}/api/outfits`, {
         params: { userId }
       });
       setOutfits(response.data);
@@ -69,7 +70,7 @@ const OutfitCreator = ({ userId }) => {
     }
 
     try {
-      await axios.post("http://localhost:8000/api/outfits/create", {
+      await axios.post(`${API_BASE_URL}/api/outfits/create`, {
         name: outfitName,
         items: selectedItems,
         userId,
@@ -87,7 +88,7 @@ const OutfitCreator = ({ userId }) => {
 
   const deleteOutfit = async (outfitId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/outfits/${outfitId}`);
+      await axios.delete(`${API_BASE_URL}/api/outfits/${outfitId}`);
       alert("Outfit deleted successfully!");
       fetchOutfits(); // Refresh the outfits list
     } catch (error) {
