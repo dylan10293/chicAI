@@ -1,24 +1,72 @@
-import logo from './logo.svg';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Container, Navbar } from 'react-bootstrap';
+import { useUser, useAuth } from "@clerk/clerk-react";
+import NavigationBar from './components/NavigationBar/NavigationBar';
+import Header from './components/Header/Header';
+import WardrobeManagement from './components/wardrobeManagement/MainContent/MainContent';
+import Footer from './components/Footer/Footer';
+import Homepage from "./components/Homepage/Homepage";
+import Dashboard from "./components/Dashboard/Dashboard";
+import OutfitManagement from "./components/outfitsManage/OutfitManagement";
+import OutfitCreator from "./components/outfitsManage/OutfitCreator";
+import Laundry from './components/Laundry/Laundry';
+import Details from './components/wardrobeManagement/IndividualItemView/ItemEditView';
 import './App.css';
 
 function App() {
+  const { isSignedIn } = useUser();
+  const { userId } = useAuth();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="app-wrapper">
+        {isSignedIn && (
+          <div className="nav-and-header">
+            <NavigationBar />
+
+            <Navbar.Brand href="/" className="navbar-brand">
+              <h3 className="text-light">ChicAI</h3>
+            </Navbar.Brand>
+
+            <Header />
+          </div>
+        )}
+
+        {/* Main Content */}
+        <Container className="main-content" fluid>
+          <Routes>
+            {/* Default Route */}
+            <Route
+              path="/"
+              element={
+                isSignedIn && userId ? <Navigate to="/outfits" /> : <Homepage />
+              }
+            />
+
+            {/* Specific Routes */}
+            <Route
+              path="/outfits"
+              element={
+                isSignedIn && userId ? <OutfitCreator userId={userId} /> : <Navigate to="/" />
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                isSignedIn && userId ? <Dashboard /> : <Navigate to="/" />
+              }
+            />
+            <Route path="/wardrobe-management" element={<WardrobeManagement userId={userId} />} />
+            <Route path="/laundry" element={<Laundry userId={userId} />} />
+            <Route path="/details" element={<Details userId={userId} />} />
+          </Routes>
+        </Container>
+
+        {/* Footer */}
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

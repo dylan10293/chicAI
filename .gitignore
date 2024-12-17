@@ -1,3 +1,9 @@
+chicAI-backend/app.yaml
+chicAI-frontend/app.yaml
+
+chicAI-frontend/.env
+chicAI-backend/yarn.lock
+chicAI-frontend/yarn.lock
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
