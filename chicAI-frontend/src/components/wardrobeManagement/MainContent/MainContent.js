@@ -34,7 +34,7 @@ function MainContent({ userId }) {
                 to="/details"
                 state={{
                   item: item.name,
-                  img: '/dummy-sweater.png',
+                  img: `https://dylan-cloudfront-testbucket.s3.us-east-2.amazonaws.com/${item._id}.jpg`,
                   _id: item._id,
                   tags: item.tags || [],
                   style: item.style,
@@ -43,7 +43,7 @@ function MainContent({ userId }) {
                 }}
               >
 
-                <Card.Img variant="top" src='/dummy-sweater.png' />
+                <Card.Img variant="top" src={`https://dylan-cloudfront-testbucket.s3.us-east-2.amazonaws.com/${item._id}.jpg`} />
                 <Card.Body>
                   <Card.Text>{item.name}</Card.Text>
                 </Card.Body>
