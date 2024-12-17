@@ -76,7 +76,6 @@ app.post('/api/wardrobe/add', upload.single('image'), async (req, res) => {
 		const result = await wardrobeCollection.insertOne(newItem);
 
 		const file = req.file;
-		console.log('file: ', file);
 		if (file) {
 			const fileStream = fs.createReadStream(file.path);
 			const uploadParams = {
