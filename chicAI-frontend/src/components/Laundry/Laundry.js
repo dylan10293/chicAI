@@ -80,25 +80,10 @@ function Laundry({ userId }) {
                       X
                     </Button>
 
-                    <Link
-                      to="/details"
-                      state={{
-                        item: item.name,
-                        img: `https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`,
-                        _id: item._id,
-                        tags: item.tags || [],
-                        style: item.style,
-                        color: item.color,
-                        pattern: item.pattern,
-                        laundryStatus: item.laundryStatus,
-                      }}
-                    >
-
                       <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
                       <Card.Body>
                         <Card.Text>{item.name}</Card.Text>
                       </Card.Body>
-                    </Link>
                   </Card>
                 </Col>
               ))}
