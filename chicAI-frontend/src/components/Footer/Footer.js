@@ -7,7 +7,7 @@ function Footer() {
             <Container className='Footer' fluid>
                 <Row>
                     <div className="footer-content text-white">
-                        <div className='mx-5'>
+                        <div>
                             <h6>&copy; CtrlAltDelete </h6>
                             <p style={{ color: "#e0e0e0" }}>All rights reserved.</p>
                         </div>
