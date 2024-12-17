@@ -59,47 +59,48 @@ function Laundry({ userId }) {
   return (
     <Container className="wardrobe-management-content" fluid>
       <Stack gap={3} className="wardrobe-management-content-stack">
-      {Object.keys(groupedItems).map((type) => (
+        {Object.keys(groupedItems).map((type) => (
           <div key={type} className="p-2">
             {type} {/* Display item type as header */}
-            
+
             {/* Horizontal Grid for each type */}
 
             <Row className="wardrobe-items-row" xs={1} sm={2} md={3} lg={4} xl={5} gap={3}>
               {/* Render the items of the current type */}
               {groupedItems[type].map((item) => (
                 <Col key={item._id} className="wardrobe-item-col">
-                <Card className="wardrobe-management-card" style={{ width: '15rem' }}>
+                  <Card className="wardrobe-management-card" style={{ width: '15rem' }}>
 
-              {/* X Button */}
-              <Button
-                variant="danger"
-                className="close-button"
-                onClick={() => toggleLaundryStatus(item._id)}
-              >
-                X
-              </Button>
+                    {/* X Button */}
+                    <Button
+                      variant="danger"
+                      className="close-button"
+                      onClick={() => toggleLaundryStatus(item._id)}
+                    >
+                      X
+                    </Button>
 
-              <Link
-                to="/details"
-                state={{
-                  item: item.name,
-                  img: `https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`,
-                  _id: item._id,
-                  tags: item.tags || [],
-                  style: item.style,
-                  color: item.color,
-                  pattern: item.pattern,
-                }}
-                >
+                    <Link
+                      to="/details"
+                      state={{
+                        item: item.name,
+                        img: `https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`,
+                        _id: item._id,
+                        tags: item.tags || [],
+                        style: item.style,
+                        color: item.color,
+                        pattern: item.pattern,
+                        laundryStatus: item.laundryStatus,
+                      }}
+                    >
 
-                <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
-                <Card.Body>
-                  <Card.Text>{item.name}</Card.Text>
-                </Card.Body>
-              </Link>
-            </Card>
-            </Col>
+                      <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
+                      <Card.Body>
+                        <Card.Text>{item.name}</Card.Text>
+                      </Card.Body>
+                    </Link>
+                  </Card>
+                </Col>
               ))}
             </Row>
           </div>
