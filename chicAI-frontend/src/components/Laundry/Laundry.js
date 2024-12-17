@@ -24,7 +24,6 @@ function Laundry({ userId }) {
       );
   };
 
-  // Toggle laundryStatus to false for a specific item
   const toggleLaundryStatus = async (id) => {
     try {
       const response = await fetch(
@@ -34,9 +33,11 @@ function Laundry({ userId }) {
           headers: { "Content-Type": "application/json" },
         }
       );
-
+  
       if (response.ok) {
-        fetchLaundryItems(); // Refresh the list after successful update
+        const data = await response.json();
+        console.log("Laundry status updated to:", data.laundryStatus);
+        fetchLaundryItems(); // Refresh the list to reflect the updated status
       } else {
         console.error("Failed to update laundry status.");
       }
