@@ -3,8 +3,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./db/connection');
 const userRoutes = require('./routes/userRoutes');
-import 'bootstrap/dist/css/bootstrap.min.css'; 
-
 
 // Initialize express app
 const app = express();
@@ -27,7 +25,7 @@ app.use('/user', userRoutes);
 app.use('/uploads', express.static('uploads'));
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001; // Changed to 5001 to avoid port conflict
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
