@@ -7,8 +7,21 @@ import dotenv from "dotenv";
 import suggestionsRouter from "./routes/suggestions.js";
 import outfitsRouter from "./routes/outfits.js";
 import laundryRouter from "./routes/laundry.js";
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import multer from 'multer';
+import fs from 'fs';
 
 dotenv.config();
+
+const upload = multer({ dest: 'uploads/' });
+
+const s3 = new S3Client({
+	region: process.env.AWS_REGION,
+	credentials: {
+		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+	}
+});
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -44,7 +57,7 @@ app.post("/register", async (req, res) => {
 	}
 });
 
-app.post('/api/wardrobe/add', async (req, res) => {
+app.post('/api/wardrobe/add', upload.single('image'), async (req, res) => {
 	try {
 
 		const wardrobeCollection = db.collection('wardrobe');
@@ -61,6 +74,27 @@ app.post('/api/wardrobe/add', async (req, res) => {
 		if (style) newItem.style = style;
 
 		const result = await wardrobeCollection.insertOne(newItem);
+
+		const file = req.file;
+		console.log('file: ', file);
+		if (file) {
+			const fileStream = fs.createReadStream(file.path);
+			const uploadParams = {
+				Bucket: process.env.AWS_BUCKET_NAME,
+				Key: `${result.insertedId}.jpg`,
+				Body: fileStream,
+				ContentType: file.mimetype,
+				ACL: 'public-read'
+			};
+			try {
+				await s3.send(new PutObjectCommand(uploadParams));
+				// const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`;
+				await fs.unlinkSync(file.path);
+			} catch (err) {
+				console.error('Error uploading file to S3:', err);
+				return res.status(500).json({ error: "Error uploading image." });
+			}
+		}
 
 		res.status(201).json({
 			message: "Item successfully added to wardrobe!",
