@@ -153,6 +153,7 @@ const OutfitCreator = ({ userId }) => {
                       onClick={() => toggleItemSelection(item._id)}
                     >
                       <Card.Body>
+                      <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
                         <Card.Title className="card-title">{item.name}</Card.Title>
                         <Card.Text className="card-text">Type: {item.type}</Card.Text>
                         <Card.Text className="card-text">Tags: {item.tags.join(", ")}</Card.Text>
