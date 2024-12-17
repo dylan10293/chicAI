@@ -14,6 +14,7 @@ function NavigationBar() {
             <Nav className="navigation-content text-white">
               <Nav.Link as={Link} to="/" style={{ color: 'white' }}>Home</Nav.Link>
               <Nav.Link as={Link} to="/wardrobe-management" style={{ color: 'white' }}>Wardrobe Management</Nav.Link>
+              <Nav.Link as={Link} to="/outfits" style={{ color: 'white' }}>Outfits</Nav.Link>
               <Nav.Link as={Link} to="/laundry" style={{ color: 'white' }}>Laundry</Nav.Link>
             </Nav>
           </Navbar.Collapse>

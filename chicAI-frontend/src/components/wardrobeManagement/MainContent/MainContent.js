@@ -184,8 +184,7 @@ function MainContent({ userId }) {
               {/* Render the items of the current type */}
               {groupedItems[type].map((item) => (
                 <Col key={item._id} className="wardrobe-item-col">
-                  <Card className="wardrobe-management-card" style={{ width: '15rem' }}>
-
+                  <Card className="wardrobe-management-card">
                     <Link
                       to="/details"
                       state={{
