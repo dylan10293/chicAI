@@ -20,6 +20,7 @@
 .wardrobe-card {
 	transition: 0.3s ease-in-out;
 	cursor: pointer;
+	height: 100%;
 }
 
 .wardrobe-card:hover {
@@ -51,6 +52,7 @@
 .outfit-card {
 	position: relative;
 	transition: 0.3s ease-in-out;
+	height: 100%;
 }
 
 .outfit-card:hover {
@@ -101,18 +103,21 @@
 
 .wardrobe-items-scrollable {
 	height: 60vh;
-	overflow: overlay;
-	border: 1px solid #ddd;
-	padding: 10px 20px;
+	overflow-y: overlay;
+	overflow-x: hidden;
+	/* border: 1px solid #ddd; */
+	padding: 10px;
 	background-color: #ffffff;
-	margin-top: 15px;
+	/* margin-top: 15px; */
 }
 
 .outfits-items-scrollable {
 	height: 72.3vh;
-	overflow: overlay;
-	border: 1px solid #ddd;
-	padding: 10px 20px;
+	overflow-y: overlay;
+	overflow-x: hidden;
+
+	/* border: 1px solid #ddd; */
+	padding: 10px;
 	background-color: #ffffff;
-	margin-top: 15px;
+	/* margin-top: 15px; */
 }
