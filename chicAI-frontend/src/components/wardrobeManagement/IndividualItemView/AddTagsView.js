@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
 
-const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+const API_BASE_URL = `https://${process.env.REACT_APP_API_HOST}`;
 
 function AddTagsView({ itemId, onTagsAdded }) {
   const [tag, setTag] = useState('');

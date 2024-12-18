@@ -13,7 +13,8 @@ import fs from 'fs';
 
 dotenv.config();
 
-const upload = multer({ dest: 'uploads/' });
+// const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage: multer.memoryStorage() });
 
 const s3 = new S3Client({
 	region: process.env.AWS_REGION,
@@ -24,11 +25,15 @@ const s3 = new S3Client({
 });
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(bodyParser.json());
 
+
+app.get("/", (req, res) => {
+	res.status(200).json({ message: "Hello" })
+})
 
 app.post("/register", async (req, res) => {
 	const { id, email_addresses, first_name, last_name } = req.body.data;
@@ -78,21 +83,19 @@ app.post('/api/wardrobe/add', upload.single('image'), async (req, res) => {
 
 		const file = req.file;
 		if (file) {
-			const fileStream = fs.createReadStream(file.path);
 			const uploadParams = {
 				Bucket: process.env.AWS_BUCKET_NAME,
-				Key: `${result.insertedId}.jpg`,
-				Body: fileStream,
+				Key: `${result.insertedId}.jpg`, // Unique key using the inserted ID
+				Body: file.buffer, // Use file.buffer from MemoryStorage
 				ContentType: file.mimetype,
-				ACL: 'public-read'
+				ACL: 'public-read',
 			};
+
 			try {
 				await s3.send(new PutObjectCommand(uploadParams));
-				// const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`;
-				await fs.unlinkSync(file.path);
 			} catch (err) {
 				console.error('Error uploading file to S3:', err);
-				return res.status(500).json({ error: "Error uploading image." });
+				return res.status(500).json({ error: "Error uploading image to S3." });
 			}
 		}
 
@@ -115,5 +118,5 @@ app.use("/api/outfits", outfitsRouter); // Updated route
 app.use("/api/laundry", laundryRouter);
 
 app.listen(PORT, () => {
-	console.log(`Server listening on port ${PORT}`);
+	console.log(`Server: ${PORT}`);
 });

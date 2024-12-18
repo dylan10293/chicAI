@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../wardrobeManagement/MainContent/MainContent.css";
 import { Container, Stack, Card, Button, Row, Col } from "react-bootstrap";
 
-const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+const API_BASE_URL = `https://${process.env.REACT_APP_API_HOST}`;
 
 function Laundry({ userId }) {
   const [wardrobeItems, setWardrobeItems] = useState([]);
@@ -20,7 +20,7 @@ function Laundry({ userId }) {
         setWardrobeItems(data); // Store the fetched wardrobe items in state
       })
       .catch((error) =>
-        console.error("Error fetching wardrobe items:", error)
+        console.error("Error fetching wardrobe items from laundry:", error)
       );
   };
 
@@ -80,10 +80,10 @@ function Laundry({ userId }) {
                       X
                     </Button>
 
-                      <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
-                      <Card.Body>
-                        <Card.Text>{item.name}</Card.Text>
-                      </Card.Body>
+                    <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
+                    <Card.Body>
+                      <Card.Text>{item.name}</Card.Text>
+                    </Card.Body>
                   </Card>
                 </Col>
               ))}

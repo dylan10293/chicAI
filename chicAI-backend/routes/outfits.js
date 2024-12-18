@@ -12,7 +12,7 @@ router.get("/wardrobe", async (req, res) => {
     // Fetch all wardrobe items from the wardrobe collection
     const wardrobeItems = await db
       .collection("wardrobe")
-      .find({userId})
+      .find({ userId })
       .toArray();
 
     // Respond with the fetched items
@@ -55,7 +55,6 @@ router.post('/wardrobe/:itemId/tags', async (req, res) => {
   }
 
   try {
-    const db = getDb();
 
     // Find the item in the wardrobe collection and add the new tags
     const result = await db.collection('wardrobe').updateOne(
@@ -158,7 +157,6 @@ router.delete('/wardrobe/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const db = getDb();
 
     // Convert the id to ObjectId
     const result = await db.collection('wardrobe').deleteOne({ _id: new ObjectId(id) });

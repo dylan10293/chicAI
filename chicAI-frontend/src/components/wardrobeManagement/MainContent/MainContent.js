@@ -5,7 +5,7 @@ import { Container, Row, Col, Card, Modal, Button, Form, Stack, Spinner } from '
 import axios from 'axios';
 
 
-const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+const API_BASE_URL = `https://${process.env.REACT_APP_API_HOST}`;
 
 function MainContent({ userId }) {
   const [wardrobeItems, setWardrobeItems] = useState([]);

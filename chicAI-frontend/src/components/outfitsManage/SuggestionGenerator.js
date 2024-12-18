@@ -9,7 +9,7 @@ import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import "./SuggestionGenerator.css";
 
-const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+const API_BASE_URL = `https://${process.env.REACT_APP_API_HOST}`;
 
 const SuggestionGenerator = ({ userId }) => {
   const [loading, setLoading] = useState(false);

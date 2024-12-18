@@ -31,3 +31,4 @@ yarn-error.log*
 *.env
 *app.yaml
 chicAI-backend/uploads/*
+chicAI-backend/.env.production
