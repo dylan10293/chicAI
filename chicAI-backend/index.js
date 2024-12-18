@@ -16,6 +16,8 @@ dotenv.config();
 
 // const upload = multer({ dest: 'uploads/' });
 const upload = multer({ storage: multer.memoryStorage() });
+// const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage: multer.memoryStorage() });
 
 const s3 = new S3Client({
 	region: process.env.AWS_REGION,
@@ -26,6 +28,7 @@ const s3 = new S3Client({
 });
 
 const app = express();
+const PORT = process.env.PORT || 8080;
 const PORT = process.env.PORT || 8080;
 
 app.use(cors());
