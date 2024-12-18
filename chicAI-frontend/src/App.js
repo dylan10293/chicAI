@@ -61,7 +61,7 @@ function App() {
 
             {/* New Profile Page Route */}
             <Route
-              path="/ProfilePage"
+              path="/profile"
               element={
                 isSignedIn && userId ? <ProfilePage /> : <Navigate to="/" />
               }
@@ -69,7 +69,6 @@ function App() {
             <Route path="/wardrobe-management" element={isSignedIn && userId ? <WardrobeManagement userId={userId} /> : <Navigate to="/" />} />
             <Route path="/laundry" element={isSignedIn && userId ? <Laundry userId={userId} /> : <Navigate to="/" />} />
             <Route path="/details" element={isSignedIn && userId ? <Details userId={userId} /> : <Navigate to="/" />} />
-            <Route path="/profile" element={<ProfilePage userId={userId} />} />
           </Routes>
         </Container>
 
