@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 
 
 app.get("/", (req, res) => {
-	res.status(200).json({ message: "Hello" })
+	res.status(200).json({ message: "Hello New ChicAI" })
 })
 
 app.post("/register", async (req, res) => {
