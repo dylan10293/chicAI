@@ -1,33 +1,27 @@
-import { Container, Row, Nav } from 'react-bootstrap'
-import './Footer.css'
+import { Container, Row, Col, Nav } from 'react-bootstrap';
+import './Footer.css';
 
 function Footer() {
     return (
-        <footer>
-            <Container className='Footer' fluid>
-                <Row>
-                    <div className="footer-content text-white">
-                        <div>
-                            <h6>&copy; CtrlAltDelete </h6>
-                            <p style={{ color: "#e0e0e0" }}>All rights reserved.</p>
-                            {/* <a href="mailto:fk61462n@pace.edu" className="text-white">
-                                care@chicai.com
-                            </a> */}
-                        </div>
+        <footer className="footer">
+            <Container fluid>
+                <Row className="footer-content text-white">
+                    <Col className="text-center text-md-left">
+                        <h8><i>&copy; Designed & Developed by CtrlAltDefeat</i></h8>
+                    </Col>
 
-                        <Nav className="flex-column footer-links">
-                            <h6>Navigation</h6>
-                            <Nav.Link href="/outfits" className='text-white'>Outfits</Nav.Link>
-                            <Nav.Link href="/wardrobe-management" className='text-white'>Wardrobe</Nav.Link>
-                            <Nav.Link href="/laundry" className='text-white'>Laundry</Nav.Link>
+                    <Col className="text-center">
+                        <Nav className="footer-links">
+                            <Nav.Link href="/outfits" className="text-white">| Meet The Team</Nav.Link>
+                            <Nav.Link href="/outfits" className="text-white">| Outfits</Nav.Link>
+                            <Nav.Link href="/wardrobe-management" className="text-white">| Wardrobe</Nav.Link>
+                            <Nav.Link href="/laundry" className="text-white">| Laundry</Nav.Link>
                         </Nav>
-
-                    </div>
+                    </Col>
                 </Row>
-
             </Container>
-        </footer >
-    )
+        </footer>
+    );
 }
 
-export default Footer
+export default Footer;

@@ -9,6 +9,24 @@
 	background-color: #f8f9fa;
 }
 
-.Card .Body {
+.wardrobe-management-card {
+	width: 100%; /* Ensures all cards have the same width */
+	height: 100%; /* Makes sure they take up equal space */
+	display: flex;
+	flex-direction: column;
+  }
+
+  .wardrobe-management-card img {
+	height: 250px; /* Fixed height for uniformity */
+	width: 100%;
+	object-fit: cover; /* Ensures proper scaling without distortion */
+	border-radius: 5px;
+  }
+
+  .wardrobe-management-card .card-body {
 	text-align: center;
-}
+	flex-grow: 1; /* Ensures the text fills available space */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }

@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Container, Row, Col } from "react-bootstrap";
-import LoginForm from '../Login/LoginForm';
+import { Row, Col } from "react-bootstrap";
 import RegisterForm from '../Register/RegisterForm';
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
+import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react'
 
 
 const Homepage = () => {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import "../wardrobeManagement/MainContent/MainContent.css";
 import { Container, Stack, Card, Button, Row, Col } from "react-bootstrap";
 
@@ -77,7 +76,7 @@ function Laundry({ userId }) {
                       className="close-button"
                       onClick={() => toggleLaundryStatus(item._id)}
                     >
-                      X
+                      Move to Wardrobe
                     </Button>
 
                       <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />

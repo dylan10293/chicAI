@@ -8,7 +8,6 @@ import WardrobeManagement from './components/wardrobeManagement/MainContent/Main
 import Footer from './components/Footer/Footer';
 import Homepage from "./components/Homepage/Homepage";
 import Dashboard from "./components/Dashboard/Dashboard";
-import OutfitManagement from "./components/outfitsManage/OutfitManagement";
 import OutfitCreator from "./components/outfitsManage/OutfitCreator";
 import Laundry from './components/Laundry/Laundry';
 import Details from './components/wardrobeManagement/IndividualItemView/ItemEditView';

@@ -6,6 +6,7 @@ import EditTagsView from './EditTagsView';
 import { FaRegEdit } from "react-icons/fa";
 import { useState } from 'react';
 import { IoClose } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
 
@@ -96,6 +97,8 @@ const handleCloseEditView = () => {
   setNewPattern(pattern);
 };
 
+const navigate = useNavigate(); // Initialize navigate
+
 const handleToggleLaundryStatus = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/laundry/${_id}/toggle-laundry`, {
@@ -109,7 +112,7 @@ const handleToggleLaundryStatus = async () => {
 
     if (response.ok) {
       alert(`Laundry status updated to: ${data.laundryStatus ? 'In Laundry' : 'Available'}`);
-      window.location.reload(); // Reload to reflect the updated status
+      navigate('/wardrobe-management'); // Navigate to the wardrobe management page
     } else {
       alert(data.message || 'Failed to update laundry status.');
     }
