@@ -3,7 +3,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import OutfitCard from "./OutfitCard";
 
-const API_BASE_URL = `https://${process.env.REACT_APP_API_HOST}`;
+const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
 
 const OutfitManagement = ({ userId }) => {
   const [suggestedOutfits, setSuggestedOutfits] = useState([]);

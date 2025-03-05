@@ -10,14 +10,10 @@ import laundryRouter from "./routes/laundry.js";
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import multer from 'multer';
 import fs from 'fs';
-import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
 
-// const upload = multer({ dest: 'uploads/' });
-const upload = multer({ storage: multer.memoryStorage() });
-// const upload = multer({ dest: 'uploads/' });
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ dest: 'uploads/' });
 
 const s3 = new S3Client({
 	region: process.env.AWS_REGION,
@@ -28,16 +24,11 @@ const s3 = new S3Client({
 });
 
 const app = express();
-const PORT = process.env.PORT || 8080;
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 
 app.use(cors());
 app.use(bodyParser.json());
 
-
-app.get("/", (req, res) => {
-	res.status(200).json({ message: "Hello New ChicAI" })
-})
 
 app.post("/register", async (req, res) => {
 	const { id, email_addresses, first_name, last_name } = req.body.data;
@@ -87,19 +78,21 @@ app.post('/api/wardrobe/add', upload.single('image'), async (req, res) => {
 
 		const file = req.file;
 		if (file) {
+			const fileStream = fs.createReadStream(file.path);
 			const uploadParams = {
 				Bucket: process.env.AWS_BUCKET_NAME,
-				Key: `${result.insertedId}.jpg`, // Unique key using the inserted ID
-				Body: file.buffer, // Use file.buffer from MemoryStorage
+				Key: `${result.insertedId}.jpg`,
+				Body: fileStream,
 				ContentType: file.mimetype,
-				ACL: 'public-read',
+				ACL: 'public-read'
 			};
-
 			try {
 				await s3.send(new PutObjectCommand(uploadParams));
+				// const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`;
+				await fs.unlinkSync(file.path);
 			} catch (err) {
 				console.error('Error uploading file to S3:', err);
-				return res.status(500).json({ error: "Error uploading image to S3." });
+				return res.status(500).json({ error: "Error uploading image." });
 			}
 		}
 
@@ -121,8 +114,6 @@ app.use("/api/outfits", outfitsRouter); // Updated route
 
 app.use("/api/laundry", laundryRouter);
 
-app.use("/api/users", userRoutes);
-
 app.listen(PORT, () => {
-	console.log(`Server: ${PORT}`);
+	console.log(`Server listening on port ${PORT}`);
 });
