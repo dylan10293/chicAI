@@ -47,7 +47,7 @@ a {
 
 .nav-and-header {
 	display: flex;
-	background-color: rgba(174, 86, 196, 1);
+	background-color: #80296d;
 	color: white;
 	align-items: center;
 }
@@ -60,6 +60,7 @@ a {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh; /* Ensures the wrapper takes full viewport height */
+	background-color: #fee6f821;
 }
 
 .main-content {

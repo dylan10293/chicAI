@@ -1,7 +1,6 @@
 /* General container styling */
 .outfit-creator-container {
 	padding: 20px;
-	background-color: #f9f9f9;
 }
 
 /* Section titles */
@@ -31,24 +30,6 @@
 	border: 2px solid #b003b0;
 }
 
-/* Create outfit button */
-.create-outfit-button {
-	background-color: #b003b0;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	margin-top: 15px;
-}
-
-.create-outfit-button:hover {
-	background-color: purple;
-}
-
-/* Outfits section styling */
-/* .outfits-section {
-	padding-left: 20px;
-} */
-
 .outfit-card {
 	position: relative;
 	transition: 0.3s ease-in-out;
@@ -72,53 +53,19 @@
 	color: #800080;
 }
 
-/* Header styling */
-.header {
-	background-color: #800080; /* Purple background color */
-	color: white; /* Text color */
-	padding: 15px; /* Add some padding */
-	display: flex; /* Use flexbox for alignment */
-	border-radius: 0px; /* Optional: rounded corners */
-	margin-bottom: 20px; /* Space below the header */
-	font-size: 1.2rem;
-	position: fixed;
-	top: 0;
-	margin: 0;
-	left: 0;
-	width: 100%;
-	z-index: 1000;
-}
-
-.generate-suggestions-button {
-	margin-right: 10px;
-	background-color: #b003b0;
-	color: white;
-	border: none;
-	border-radius: 5px;
-}
-
-.generate-suggestions-button:hover {
-	background-color: #800080;
-}
-
 .wardrobe-items-scrollable {
 	height: 60vh;
 	overflow-y: overlay;
 	overflow-x: hidden;
-	/* border: 1px solid #ddd; */
 	padding: 10px;
-	background-color: #ffffff;
-	/* margin-top: 15px; */
+	margin-bottom: 15px;
 }
 
 .outfits-items-scrollable {
-	height: 72.3vh;
+	height: 85vh;
 	overflow-y: overlay;
 	overflow-x: hidden;
-
-	/* border: 1px solid #ddd; */
 	padding: 10px;
-	background-color: #ffffff;
 	/* margin-top: 15px; */
 }
 

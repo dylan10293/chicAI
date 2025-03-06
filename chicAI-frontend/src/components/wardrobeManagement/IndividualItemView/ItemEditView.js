@@ -210,7 +210,7 @@ const handleToggleLaundryStatus = async () => {
                 />
 
                 <div className='update-item'>
-                <Button className="update-button" onClick={handleUpdateItem}>Update Item</Button>
+                <Button onClick={handleUpdateItem}>Update Item</Button>
                 </div>
                 </div>
 
@@ -242,7 +242,7 @@ const handleToggleLaundryStatus = async () => {
                 />
 
                 <div className='update-item'>
-                <Button className="update-button" onClick={handleUpdateItem}>Update Item</Button>
+                <Button onClick={handleUpdateItem}>Update Item</Button>
                 </div>
                 </div>
               )}
@@ -273,7 +273,7 @@ const handleToggleLaundryStatus = async () => {
                 />
 
                 <div className='update-item'>
-                <Button className="update-button" onClick={handleUpdateItem}>Update Item</Button>
+                <Button onClick={handleUpdateItem}>Update Item</Button>
                 </div>
                 </div>
 

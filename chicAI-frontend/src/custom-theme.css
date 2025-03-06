@@ -1,6 +1,6 @@
 :root {
-	--bs-primary: #9b59b6 !important;
-	--bs-hover-bg: #6d3583 !important;
+	--bs-primary: #80296D !important;
+	--bs-hover-bg: #80296d98 !important;
 }
 
 .btn-outline-primary {
@@ -14,8 +14,11 @@
 }
 
 .btn-primary {
-	background-color: var(--bs-primary) !important;
-}
+	background-color: #98689D;
+	color: #F1EAF0;
+  	text-transform: capitalize;
+	border: none
+  }
 
 .btn-primary:hover {
 	background-color: var(--bs-hover-bg) !important;

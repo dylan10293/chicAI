@@ -121,7 +121,7 @@ const OutfitCreator = ({ userId }) => {
         <Col md={5} className="wardrobe-section">
           <div className="d-flex justify-content-between align-items-center pt-2 pb-2">
             <h2 className="section-title">Create Outfit</h2>
-            <Button variant="primary" onClick={() => setShowModal(true)} className="generate-suggestions-button">
+            <Button variant="primary" onClick={() => setShowModal(true)}>
               Generate Suggestions
             </Button>
           </div>
@@ -165,7 +165,7 @@ const OutfitCreator = ({ userId }) => {
                 ))}
               </Row>
             </div>
-            <Button className="create-outfit-button" onClick={createOutfit}>
+            <Button onClick={createOutfit}>
               Create Outfit
             </Button>
           </div>

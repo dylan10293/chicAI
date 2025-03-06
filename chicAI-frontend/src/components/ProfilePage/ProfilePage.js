@@ -35,7 +35,7 @@ function ProfilePage() {
             <div className="profile-details">
               <h3>{userData.first_name} {userData.last_name}</h3>
               <p>Email: {userData.email_address}</p>
-              <Button className="profile-edit-btn" variant="primary">Edit Profile</Button>
+              <Button variant="primary">Edit Profile</Button>
             </div>
           </div>
         </Col>

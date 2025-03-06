@@ -1,6 +1,6 @@
 .profile-container {
     padding: 20px;
-    background-color: #f8f9fa;
+    /* background-color: #f8f9fa; */
     height: 100vh;
 }
 
@@ -36,12 +36,6 @@
     font-size: 1rem;
     color: #666;
     text-align: center;
-}
-
-.profile-edit-btn {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
 }
 
 @media (max-width: 768px) {

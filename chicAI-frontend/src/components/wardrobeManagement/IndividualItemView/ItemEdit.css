@@ -104,18 +104,7 @@
   display: flex;
   justify-content: end;
 }
-.update-button {
-  background-color: #AE56C4;
-  color: #F5F5F5;
-  border-color: #F5F5F5;
-  
-}
 
-.update-button:hover {
-  background-color: #ebe3e2; 
-  color: black;
-  border-color: #F5F5F5;
-}
 
 .edit-tags-modal {
   background-color: white;
