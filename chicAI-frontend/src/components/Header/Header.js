@@ -5,10 +5,13 @@ import { Container, Nav, NavDropdown } from 'react-bootstrap';
 import { IoHeartCircleOutline } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { useAuth } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
+
 
 function Header() {
 
   const { signOut } = useAuth(); // Access the signOut function
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -24,8 +27,8 @@ function Header() {
       <Nav expand="lg" className="header-content">
         <Nav.Link className="favorites-icon" href="#favorites"><IoHeartCircleOutline style={{ color: 'white' }} /></Nav.Link>
         <NavDropdown className="user-icon" title={<FaUser style={{ color: 'white' }} />} id="collapsible-nav-dropdown">
-          <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-          {/* <NavDropdown.Item href="#action/settings">Settings</NavDropdown.Item> */}
+        <NavDropdown.Item onClick={() => navigate("/profile")}>Profile</NavDropdown.Item>
+        {/* <NavDropdown.Item href="#action/settings">Settings</NavDropdown.Item> */}
           <NavDropdown.Item onClick={() => handleLogout()}>Logout</NavDropdown.Item>
         </NavDropdown>
       </Nav>
