@@ -60,7 +60,7 @@ function Laundry({ userId }) {
       <Stack gap={3} className="wardrobe-management-content-stack">
         {Object.keys(groupedItems).map((type) => (
           <div key={type} className="p-2">
-            {type} {/* Display item type as header */}
+            <h4>{type}</h4> {/* Display item type as header */}
 
             {/* Horizontal Grid for each type */}
 

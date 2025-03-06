@@ -90,9 +90,12 @@ function MainContent({ userId }) {
 
   return (
     <Container className="wardrobe-management-content" fluid>
-      <Button variant="primary" className="mb-3" onClick={() => setShowModal(true)}>
-        Add New Wardrobe Item
-      </Button>
+      <div className='add-wardrobe-button'>
+        <Button variant="primary" onClick={() => setShowModal(true)}>
+          + Item
+        </Button>
+      </div>
+
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Wardrobe Item</Modal.Title>
@@ -177,7 +180,7 @@ function MainContent({ userId }) {
         {/* Iterate over grouped items */}
         {Object.keys(groupedItems).map((type) => (
           <div key={type} className="p-2">
-            {type} {/* Display item type as header */}
+            <h4>{type}</h4> {/* Display item type as header */}
 
             {/* Horizontal Grid for each type */}
             <Row className="wardrobe-items-row" xs={1} sm={2} md={3} lg={4} xl={5} gap={3}>

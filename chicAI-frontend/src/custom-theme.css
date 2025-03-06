@@ -17,7 +17,7 @@
 	background-color: #98689D;
 	color: #F1EAF0;
   	text-transform: capitalize;
-	border: none
+	border: 1px solid #80296D;
   }
 
 .btn-primary:hover {
@@ -25,6 +25,8 @@
 }
 
 h1,
-h2 {
+h2,
+h4 {
 	color: var(--bs-primary) !important;
+	margin-bottom: 0px !important;
 }
