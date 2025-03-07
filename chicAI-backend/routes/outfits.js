@@ -12,7 +12,7 @@ router.get("/wardrobe", async (req, res) => {
     // Fetch all wardrobe items from the wardrobe collection
     const wardrobeItems = await db
       .collection("wardrobe")
-      .find({userId})
+      .find({ userId })
       .toArray();
 
     // Respond with the fetched items

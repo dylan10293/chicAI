@@ -12,10 +12,17 @@ function Footer() {
 
                     <Col className="text-center">
                         <Nav className="footer-links">
-                            <Nav.Link href="/outfits" className="text-white">Meet The Team</Nav.Link>
-                            <Nav.Link href="/outfits" className="text-white">Outfits</Nav.Link>
-                            <Nav.Link href="/wardrobe-management" className="text-white">Wardrobe</Nav.Link>
-                            <Nav.Link href="/laundry" className="text-white">Laundry</Nav.Link>
+                            {
+                                [
+                                    { href: "/outfits", title: "Meet The Team" },
+                                    { href: "/outfits", title: "Outfits" },
+                                    { href: "/wardrobe-management", title: "Wardrobe" },
+                                    { href: "/laundry", title: "Laundry" }
+                                ].map(({ href, title }) => (
+                                    <Nav.Link href={href} className="text-white">{title}</Nav.Link>
+                                ))
+                            }
+
                         </Nav>
                     </Col>
                 </Row>
