@@ -147,20 +147,7 @@ const OutfitCreator = ({ userId }) => {
               <Row>
                 {wardrobeItems.map((item) => (
                   <Col key={item._id} md={6} className="p-1">
-                    <Card
-                      className={`wardrobe-card ${selectedItems.includes(item._id) ? "selected-card" : ""
-                        }`}
-                      onClick={() => toggleItemSelection(item._id)}
-                    >
-                      <Card.Body>
-                        <div className="image-container">
-                          <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
-                        </div>
-                        <Card.Title className="card-title">{item.name}</Card.Title>
-                        <Card.Text className="card-text">Type: {item.type}</Card.Text>
-                        <Card.Text className="card-text">Tags: {item.tags.join(", ")}</Card.Text>
-                      </Card.Body>
-                    </Card>
+                    {newFunction(item)}
                   </Col>
                 ))}
               </Row>
@@ -223,6 +210,22 @@ const OutfitCreator = ({ userId }) => {
     </Container>
   );
 
+
+  function newFunction(item) {
+    return <Card
+      className={`wardrobe-card ${selectedItems.includes(item._id) ? "selected-card" : ""}`}
+      onClick={() => toggleItemSelection(item._id)}
+    >
+      <Card.Body>
+        <div className="image-container">
+          <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
+        </div>
+        <Card.Title className="card-title">{item.name}</Card.Title>
+        <Card.Text className="card-text">Type: {item.type}</Card.Text>
+        <Card.Text className="card-text">Tags: {item.tags.join(", ")}</Card.Text>
+      </Card.Body>
+    </Card>;
+  }
 };
 
 export default OutfitCreator;

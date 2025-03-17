@@ -75,14 +75,15 @@ function Laundry({ userId }) {
                       variant="danger"
                       className="close-button"
                       onClick={() => toggleLaundryStatus(item._id)}
+                      style={{ marginTop: 0 }}
                     >
                       Move to Wardrobe
                     </Button>
 
-                      <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
-                      <Card.Body>
-                        <Card.Text>{item.name}</Card.Text>
-                      </Card.Body>
+                    <Card.Img variant="top" src={`https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`} />
+                    <Card.Body>
+                      <Card.Text>{item.name}</Card.Text>
+                    </Card.Body>
                   </Card>
                 </Col>
               ))}
