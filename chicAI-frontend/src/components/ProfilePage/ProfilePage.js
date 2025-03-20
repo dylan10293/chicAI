@@ -3,11 +3,12 @@ import { useAuth } from "@clerk/clerk-react";
 import { Container, Row, Col, Button } from "react-bootstrap";  // Import Bootstrap components
 import "./ProfilePage.css"; // Import the CSS file
 
+const API_BASE_URL = process.env.REACT_APP_API;
+
 function ProfilePage() {
   const { userId } = useAuth();
   const [userData, setUserData] = useState(null);
 
-  const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
 
   useEffect(() => {
     if (!userId) return;
@@ -30,12 +31,11 @@ function ProfilePage() {
           <div className="profile-card">
             <div className="profile-image-container">
               <img src="/profile-image.png" alt="Profile" className="profile-image" />
-              {/* /Users/sharondsouza/chicAI/chicAI-frontend/public/profile-image.png */}
             </div>
             <div className="profile-details">
               <h3>{userData.first_name} {userData.last_name}</h3>
               <p>Email: {userData.email_address}</p>
-              <Button variant="primary">Edit Profile</Button>
+              {/* <Button variant="primary">Edit Profile</Button> */}
             </div>
           </div>
         </Col>

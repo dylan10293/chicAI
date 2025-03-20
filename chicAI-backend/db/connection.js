@@ -1,10 +1,13 @@
 import { MongoClient } from "mongodb";
-import dotenv from "dotenv";
+import dotenvFlow from "dotenv-flow";
 
-dotenv.config();
+dotenvFlow.config();
 
 const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri);
+const client = new MongoClient(uri, {
+  tls: true,
+  serverSelectionTimeoutMS: 5000,
+});
 try {
   await client.connect();
   await client.db("chicAI").command({ ping: 1 });

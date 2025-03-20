@@ -7,7 +7,7 @@ import './OutfitCreator.css';
 import { useAuth } from "@clerk/clerk-react";
 import WardrobeItemCard from "./WardrobeItemCard";
 
-const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+const API_BASE_URL = process.env.REACT_APP_API;
 
 const OutfitCreator = ({ userId }) => {
   const [wardrobeItems, setWardrobeItems] = useState([]);

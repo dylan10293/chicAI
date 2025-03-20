@@ -9,7 +9,6 @@ router.get("/:id", async (req, res) => {
     const usersCollection = db.collection("users"); // Ensure you reference the correct collection
 
     const user = await usersCollection.findOne({ id: id });
-
     if (!user) return res.status(404).json({ error: "User not found" });
 
     res.json(user);

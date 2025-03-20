@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../wardrobeManagement/MainContent/MainContent.css";
 import { Container, Stack, Card, Button, Row, Col } from "react-bootstrap";
 
-const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+const API_BASE_URL = process.env.REACT_APP_API;
 
 function Laundry({ userId }) {
   const [wardrobeItems, setWardrobeItems] = useState([]);
