@@ -10,8 +10,11 @@ import laundryRouter from "./routes/laundry.js";
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import multer from 'multer';
 import fs from 'fs';
+import dotenvFlow from "dotenv-flow";
 
-dotenv.config();
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
+dotenvFlow.config();
+console.log(`Running in ${process.env.NODE_ENV} mode`);
 
 const upload = multer({ storage: multer.memoryStorage() });
 
