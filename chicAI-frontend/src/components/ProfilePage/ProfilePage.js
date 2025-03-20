@@ -31,12 +31,11 @@ function ProfilePage() {
           <div className="profile-card">
             <div className="profile-image-container">
               <img src="/profile-image.png" alt="Profile" className="profile-image" />
-              {/* /Users/sharondsouza/chicAI/chicAI-frontend/public/profile-image.png */}
             </div>
             <div className="profile-details">
               <h3>{userData.first_name} {userData.last_name}</h3>
               <p>Email: {userData.email_address}</p>
-              <Button variant="primary">Edit Profile</Button>
+              {/* <Button variant="primary">Edit Profile</Button> */}
             </div>
           </div>
         </Col>
