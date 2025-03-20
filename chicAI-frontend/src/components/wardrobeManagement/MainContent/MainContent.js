@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import './MainContent.css';
-import { Container, Row, Col, Card, Modal, Button, Form, Stack, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button, Form, Stack, Spinner } from 'react-bootstrap';
 import axios from 'axios';
+import WardrobeItemCard from '../../outfitsManage/WardrobeItemCard';
 
 
-const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+const API_BASE_URL = process.env.REACT_APP_API;
 
 function MainContent({ userId }) {
+  const navigate = useNavigate();
+
   const [wardrobeItems, setWardrobeItems] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -187,7 +190,24 @@ function MainContent({ userId }) {
               {/* Render the items of the current type */}
               {groupedItems[type].map((item) => (
                 <Col key={item._id} className="wardrobe-item-col">
-                  <Card className="wardrobe-management-card">
+                  <WardrobeItemCard
+                    item={item}
+                    onClick={() => navigate("/details", {
+                      state: {
+                        item: item.name,
+                        img: `https://${process.env.REACT_APP_AWS_BUCKET_NAME}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${item._id}.jpg`,
+                        _id: item._id,
+                        tags: item.tags || [],
+                        style: item.style,
+                        color: item.color,
+                        pattern: item.pattern,
+                        laundryStatus: item.laundryStatus,
+                      }
+                    })}
+                  />
+
+
+                  {/* <Card className="wardrobe-management-card">
                     <Link
                       to="/details"
                       state={{
@@ -206,7 +226,7 @@ function MainContent({ userId }) {
                         <Card.Text>{item.name}</Card.Text>
                       </Card.Body>
                     </Link>
-                  </Card>
+                  </Card> */}
                 </Col>
               ))}
             </Row>

@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+const API_BASE_URL = process.env.REACT_APP_API;
 
 function ItemEditView() {
   const location = useLocation();
@@ -52,75 +52,75 @@ function ItemEditView() {
 
   // Handle form submission to update style, color, and pattern
   const handleUpdateItem = async () => {
-  const updatedData = {};
+    const updatedData = {};
 
-  // Only add the field if it's updated
-  if (newStyle !== style) updatedData.style = newStyle;
-  if (newColor !== color) updatedData.color = newColor;
-  if (newPattern !== pattern) updatedData.pattern = newPattern;
+    // Only add the field if it's updated
+    if (newStyle !== style) updatedData.style = newStyle;
+    if (newColor !== color) updatedData.color = newColor;
+    if (newPattern !== pattern) updatedData.pattern = newPattern;
 
-  // If no fields are updated, alert and return early
-  if (Object.keys(updatedData).length === 0) {
-    alert('No changes were made.');
-    return;
-  }
+    // If no fields are updated, alert and return early
+    if (Object.keys(updatedData).length === 0) {
+      alert('No changes were made.');
+      return;
+    }
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/outfits/wardrobe/${_id}`, {
-      method: 'PATCH',  
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedData),
-    });
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/outfits/wardrobe/${_id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+      });
 
-    if (response.ok) {
-      alert('Item updated successfully!');
-      window.location.reload(); // Reload the page to reflect the changes
-    } else {
+      if (response.ok) {
+        alert('Item updated successfully!');
+        window.location.reload(); // Reload the page to reflect the changes
+      } else {
+        const data = await response.json();
+        alert(data.message || 'Failed to update the item.');
+      }
+    } catch (error) {
+      console.error('Error updating item:', error);
+      alert('An error occurred while updating the item.');
+    }
+  };
+
+  // Function to handle closing the edit view
+  const handleCloseEditView = () => {
+    setIsEditingStyle(false);
+    setIsEditingColor(false);
+    setIsEditingPattern(false);
+    setNewStyle(style);
+    setNewColor(color);
+    setNewPattern(pattern);
+  };
+
+  const navigate = useNavigate(); // Initialize navigate
+
+  const handleToggleLaundryStatus = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/laundry/${_id}/toggle-laundry`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
       const data = await response.json();
-      alert(data.message || 'Failed to update the item.');
+
+      if (response.ok) {
+        alert(`Laundry status updated to: ${data.laundryStatus ? 'In Laundry' : 'Available'}`);
+        navigate('/wardrobe-management'); // Navigate to the wardrobe management page
+      } else {
+        alert(data.message || 'Failed to update laundry status.');
+      }
+    } catch (error) {
+      console.error('Error toggling laundry status:', error);
+      alert('An error occurred while updating laundry status.');
     }
-  } catch (error) {
-    console.error('Error updating item:', error);
-    alert('An error occurred while updating the item.');
-  }
-};
-
-// Function to handle closing the edit view
-const handleCloseEditView = () => {
-  setIsEditingStyle(false);
-  setIsEditingColor(false);
-  setIsEditingPattern(false);
-  setNewStyle(style);
-  setNewColor(color);
-  setNewPattern(pattern);
-};
-
-const navigate = useNavigate(); // Initialize navigate
-
-const handleToggleLaundryStatus = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/laundry/${_id}/toggle-laundry`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      alert(`Laundry status updated to: ${data.laundryStatus ? 'In Laundry' : 'Available'}`);
-      navigate('/wardrobe-management'); // Navigate to the wardrobe management page
-    } else {
-      alert(data.message || 'Failed to update laundry status.');
-    }
-  } catch (error) {
-    console.error('Error toggling laundry status:', error);
-    alert('An error occurred while updating laundry status.');
-  }
-};
+  };
 
   // Function to handle deleting the item
   const handleDeleteItem = async () => {
@@ -196,22 +196,22 @@ const handleToggleLaundryStatus = async () => {
               <div className='tags'>{style || 'No style available'}</div>
               {isEditingStyle && (
                 <div>
-                {/* Close icon to exit edit mode */}
-                <IoClose className="close-icon" onClick={() => {
-                setIsEditingStyle(false); // Close the edit mode for Style
-                setNewStyle(style); // Reset the input field to the original value
-                }} />
+                  {/* Close icon to exit edit mode */}
+                  <IoClose className="close-icon" onClick={() => {
+                    setIsEditingStyle(false); // Close the edit mode for Style
+                    setNewStyle(style); // Reset the input field to the original value
+                  }} />
 
-                <Form.Control 
-                  type="text" 
-                  value={newStyle} 
-                  onChange={(e) => setNewStyle(e.target.value)} 
-                  placeholder="Enter style"
-                />
+                  <Form.Control
+                    type="text"
+                    value={newStyle}
+                    onChange={(e) => setNewStyle(e.target.value)}
+                    placeholder="Enter style"
+                  />
 
-                <div className='update-item'>
-                <Button onClick={handleUpdateItem}>Update Item</Button>
-                </div>
+                  <div className='update-item'>
+                    <Button onClick={handleUpdateItem}>Update Item</Button>
+                  </div>
                 </div>
 
               )}
@@ -229,21 +229,21 @@ const handleToggleLaundryStatus = async () => {
               {isEditingColor && (
                 <div>
                   {/* Close icon to exit edit mode */}
-                <IoClose className="close-icon" onClick={() => {
-                setIsEditingColor(false); // Close the edit mode for Color
-                setNewColor(color); // Reset the input field to the original value
-                }} />
-                
-                <Form.Control 
-                  type="text" 
-                  value={newColor} 
-                  onChange={(e) => setNewColor(e.target.value)} 
-                  placeholder="Enter color"
-                />
+                  <IoClose className="close-icon" onClick={() => {
+                    setIsEditingColor(false); // Close the edit mode for Color
+                    setNewColor(color); // Reset the input field to the original value
+                  }} />
 
-                <div className='update-item'>
-                <Button onClick={handleUpdateItem}>Update Item</Button>
-                </div>
+                  <Form.Control
+                    type="text"
+                    value={newColor}
+                    onChange={(e) => setNewColor(e.target.value)}
+                    placeholder="Enter color"
+                  />
+
+                  <div className='update-item'>
+                    <Button onClick={handleUpdateItem}>Update Item</Button>
+                  </div>
                 </div>
               )}
             </Col>
@@ -259,22 +259,22 @@ const handleToggleLaundryStatus = async () => {
               <div className='tags'>{pattern || 'No pattern available'}</div>
               {isEditingPattern && (
                 <div>
-                {/* Close icon to exit edit mode */}
-                <IoClose className="close-icon" onClick={() => {
-                setIsEditingPattern(false); // Close the edit mode for Pattern
-                setNewPattern(pattern); // Reset the input field to the original value
-                }} />
+                  {/* Close icon to exit edit mode */}
+                  <IoClose className="close-icon" onClick={() => {
+                    setIsEditingPattern(false); // Close the edit mode for Pattern
+                    setNewPattern(pattern); // Reset the input field to the original value
+                  }} />
 
-                <Form.Control 
-                  type="text" 
-                  value={newPattern} 
-                  onChange={(e) => setNewPattern(e.target.value)} 
-                  placeholder="Enter pattern"
-                />
+                  <Form.Control
+                    type="text"
+                    value={newPattern}
+                    onChange={(e) => setNewPattern(e.target.value)}
+                    placeholder="Enter pattern"
+                  />
 
-                <div className='update-item'>
-                <Button onClick={handleUpdateItem}>Update Item</Button>
-                </div>
+                  <div className='update-item'>
+                    <Button onClick={handleUpdateItem}>Update Item</Button>
+                  </div>
                 </div>
 
               )}
@@ -296,11 +296,11 @@ const handleToggleLaundryStatus = async () => {
                 {laundryStatus ? 'In Laundry' : 'Available'}
               </div>
               <Button
-              className="toggle-laundry-button"
-              onClick={handleToggleLaundryStatus}
-              variant={laundryStatus ? 'secondary' : 'success'}
+                className="toggle-laundry-button"
+                onClick={handleToggleLaundryStatus}
+                variant={laundryStatus ? 'secondary' : 'success'}
               >
-              {laundryStatus ? 'Mark as Available' : 'Mark as In Laundry'}
+                {laundryStatus ? 'Mark as Available' : 'Mark as In Laundry'}
               </Button>
             </Col>
           </div>

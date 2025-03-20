@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { IoClose } from "react-icons/io5";
 import { useLocation } from 'react-router-dom';
 
-const API_BASE_URL = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`;
+const API_BASE_URL = process.env.REACT_APP_API;
 
 function EditTagsView() {
   const [tags, setTags] = useState([]);
