@@ -13,7 +13,7 @@ function Laundry({ userId }) {
   }, []);
 
   const fetchLaundryItems = () => {
-    fetch(`${API_BASE_URL}/api/laundry`) // Replace with your actual API URL
+    fetch(`${API_BASE_URL}/api/laundry?userId=${userId}`) // Replace with your actual API URL
       .then((response) => response.json())
       .then((data) => {
         setWardrobeItems(data); // Store the fetched wardrobe items in state
