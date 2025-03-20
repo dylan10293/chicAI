@@ -1,62 +1,65 @@
 .profile-container {
-    padding: 20px;
-    /* background-color: #f8f9fa; */
-    height: 100vh;
+	padding: 20px;
+	/* background-color: #f8f9fa; */
+	height: 100vh;
 }
 
 .profile-card {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 90vh;
+	background-color: white;
+	padding: 30px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .profile-image-container {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
 }
 
 .profile-image {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
+	width: 150px;
+	height: 150px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.profile-details {
+	text-align: center;
 }
 
 .profile-details h3 {
-    margin: 10px 0;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
+	margin: 10px 0;
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-align: center;
 }
 
 .profile-details p {
-    font-size: 1rem;
-    color: #666;
-    text-align: center;
+	font-size: 1rem;
+	color: #666;
+	text-align: center;
 }
 
 @media (max-width: 768px) {
-    .profile-container {
-        padding: 10px;
-    }
+	.profile-container {
+		padding: 10px;
+	}
 
-    .profile-card {
-        padding: 15px;
-    }
+	.profile-card {
+		padding: 15px;
+	}
 
-    .profile-image {
-        width: 120px;
-        height: 120px;
-    }
+	.profile-image {
+		width: 120px;
+		height: 120px;
+	}
 
-    .profile-details h3 {
-        font-size: 1.25rem;
-    }
+	.profile-details h3 {
+		font-size: 1.25rem;
+	}
 
-    .profile-details p {
-        font-size: 0.875rem;
-    }
+	.profile-details p {
+		font-size: 0.875rem;
+	}
 }

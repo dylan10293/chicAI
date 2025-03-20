@@ -3,11 +3,12 @@ import { useAuth } from "@clerk/clerk-react";
 import { Container, Row, Col, Button } from "react-bootstrap";  // Import Bootstrap components
 import "./ProfilePage.css"; // Import the CSS file
 
+const API_BASE_URL = process.env.REACT_APP_API;
+
 function ProfilePage() {
   const { userId } = useAuth();
   const [userData, setUserData] = useState(null);
 
-  const API_BASE_URL = process.env.REACT_APP_API;
 
   useEffect(() => {
     if (!userId) return;
